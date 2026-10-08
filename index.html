@@ -1,243 +1,212 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Life Book 📖</title>
+<title>My Life Book</title>
 
 <style>
-/* =========================================================
-   MY LIFE BOOK
-   ========================================================= */
-
-:root{
-    --bg:#f4efe7;
-    --paper:#fffdf7;
-    --paper2:#faf5eb;
-    --text:#3f3a35;
-    --muted:#8d847a;
-    --accent:#8b6f5a;
-    --accent2:#d9c4ad;
-    --border:#ded3c6;
-    --shadow:0 15px 45px rgba(65,50,35,.15);
-    --radius:18px;
-}
-
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
 }
 
+:root{
+    --primary:#8b6f9e;
+    --secondary:#d8c5e8;
+    --light:#f8f3fb;
+    --paper:#fffdf8;
+    --text:#403847;
+    --shadow:0 10px 30px rgba(70,50,80,.15);
+}
+
 body{
-    font-family:Georgia,"Times New Roman",serif;
-    background:
-        radial-gradient(circle at 20% 20%,rgba(255,255,255,.7),transparent 30%),
-        var(--bg);
+    font-family:Georgia, "Times New Roman", serif;
+    background:var(--light);
     color:var(--text);
     min-height:100vh;
 }
 
-button,
-input,
-textarea,
-select{
-    font:inherit;
-}
+/* ================= COVER ================= */
 
-button{
-    cursor:pointer;
-}
-
-.hidden{
-    display:none!important;
-}
-
-/* =========================================================
-   BOOK INTRO
-   ========================================================= */
-
-.book-intro{
+.cover-screen{
     position:fixed;
     inset:0;
     z-index:9999;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#e9dfd2;
-    perspective:1500px;
-    transition:opacity .8s,visibility .8s;
+    background:
+        radial-gradient(circle at 20% 20%,#fff 0 5%,transparent 6%),
+        linear-gradient(135deg,#d9c6e6,#f5eaf8,#cdb8dd);
+    transition:1s ease;
 }
 
-.book-intro.hide{
+.cover-screen.hide{
     opacity:0;
-    visibility:hidden;
+    pointer-events:none;
 }
 
 .book-cover{
-    width:min(420px,85vw);
-    height:min(560px,78vh);
-    border-radius:8px 18px 18px 8px;
-    background:
-        linear-gradient(135deg,
-        rgba(255,255,255,.16),
-        transparent 40%),
-        var(--accent);
-    color:white;
+    width:min(420px,88vw);
+    height:min(590px,82vh);
+    border-radius:8px 20px 20px 8px;
+    background:linear-gradient(135deg,#775a89,#a98abb);
     box-shadow:
-        20px 25px 50px rgba(0,0,0,.28),
-        inset -10px 0 rgba(0,0,0,.08);
+        20px 25px 45px rgba(40,25,50,.3),
+        inset -8px 0 0 rgba(255,255,255,.08);
     display:flex;
     flex-direction:column;
-    justify-content:center;
     align-items:center;
-    text-align:center;
-    transform:rotateY(-8deg);
+    justify-content:center;
     position:relative;
     overflow:hidden;
+    color:white;
 }
 
 .book-cover:before{
     content:"";
     position:absolute;
-    inset:18px;
-    border:2px solid rgba(255,255,255,.55);
-    border-radius:5px 12px 12px 5px;
+    left:20px;
+    top:0;
+    width:7px;
+    height:100%;
+    background:rgba(255,255,255,.15);
 }
 
-.book-cover small{
-    letter-spacing:5px;
-    opacity:.8;
+.cover-decoration{
+    font-size:45px;
+    margin-bottom:30px;
 }
 
 .book-cover h1{
-    font-size:clamp(42px,8vw,72px);
-    margin:20px 0 8px;
+    font-size:48px;
     font-weight:normal;
+    letter-spacing:2px;
+    text-align:center;
 }
 
 .book-cover p{
-    font-style:italic;
-    opacity:.85;
+    margin-top:15px;
+    font-family:Arial,sans-serif;
+    opacity:.9;
 }
 
-.open-book-btn{
-    margin-top:50px;
-    border:1px solid rgba(255,255,255,.6);
-    background:rgba(255,255,255,.13);
-    color:white;
-    padding:13px 28px;
+.open-btn{
+    margin-top:45px;
+    padding:14px 35px;
+    border:1px solid rgba(255,255,255,.5);
     border-radius:30px;
+    background:rgba(255,255,255,.15);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
     transition:.25s;
 }
 
-.open-book-btn:hover{
+.open-btn:hover{
     background:white;
-    color:var(--accent);
+    color:var(--primary);
+    transform:translateY(-2px);
 }
 
-/* =========================================================
-   APP
-   ========================================================= */
+/* ================= APP ================= */
 
 .app{
     min-height:100vh;
-    display:none;
-}
-
-.app.show{
-    display:block;
+    padding:25px;
 }
 
 .topbar{
-    height:70px;
-    padding:0 25px;
+    max-width:1200px;
+    margin:auto;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    background:rgba(255,253,247,.86);
-    backdrop-filter:blur(15px);
-    border-bottom:1px solid var(--border);
-    position:sticky;
-    top:0;
-    z-index:100;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
 }
 
-.brand{
-    font-size:22px;
-    font-weight:bold;
+.logo{
+    font-size:28px;
 }
 
-.brand span{
-    font-size:13px;
-    color:var(--muted);
-    display:block;
-    font-weight:normal;
+.top-actions{
+    display:flex;
+    gap:8px;
 }
 
-.menu-btn{
-    border:0;
-    background:transparent;
-    font-size:25px;
+.icon-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:white;
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    font-size:18px;
 }
 
 .layout{
-    display:flex;
-    min-height:calc(100vh - 70px);
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:20px;
 }
 
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+/* ================= SIDEBAR ================= */
 
 .sidebar{
-    width:235px;
-    padding:20px 15px;
-    border-right:1px solid var(--border);
-    background:rgba(255,253,247,.65);
-    transition:.3s;
+    background:rgba(255,255,255,.8);
+    border-radius:20px;
+    padding:15px;
+    box-shadow:var(--shadow);
+    height:max-content;
+    position:sticky;
+    top:20px;
 }
 
-.nav-item{
+.nav-btn{
     width:100%;
-    display:flex;
-    gap:12px;
-    align-items:center;
-    padding:12px 14px;
-    margin-bottom:5px;
     border:0;
-    border-radius:12px;
     background:transparent;
-    color:var(--text);
+    padding:14px;
+    border-radius:12px;
     text-align:left;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:15px;
+    color:var(--text);
+    margin-bottom:5px;
 }
 
-.nav-item:hover,
-.nav-item.active{
-    background:var(--accent2);
+.nav-btn:hover,
+.nav-btn.active{
+    background:var(--secondary);
 }
 
-.content{
-    flex:1;
-    padding:30px;
-    max-width:1400px;
-    margin:auto;
-    width:100%;
+.nav-btn span{
+    margin-right:8px;
 }
+
+/* ================= PAGES ================= */
 
 .page{
     display:none;
-    animation:fadeIn .4s ease;
+    animation:pageIn .35s ease;
 }
 
 .page.active{
     display:block;
 }
 
-@keyframes fadeIn{
+@keyframes pageIn{
     from{
         opacity:0;
-        transform:translateY(8px);
+        transform:translateY(10px);
     }
     to{
         opacity:1;
@@ -245,504 +214,350 @@ button{
     }
 }
 
-.page-heading{
-    margin-bottom:25px;
-}
-
-.page-heading h2{
-    font-size:32px;
-    font-weight:normal;
-}
-
-.page-heading p{
-    color:var(--muted);
-    margin-top:5px;
-}
-
-/* =========================================================
-   CARDS
-   ========================================================= */
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-    gap:18px;
-}
-
-.card{
+.paper{
     background:var(--paper);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:20px;
+    min-height:650px;
+    border-radius:6px 20px 20px 6px;
     box-shadow:var(--shadow);
+    padding:35px;
+    position:relative;
+    overflow:hidden;
 }
 
-.card h3{
-    margin-bottom:10px;
+.paper:before{
+    content:"";
+    position:absolute;
+    left:20px;
+    top:0;
+    bottom:0;
+    width:2px;
+    background:#eadfea;
 }
 
-.stat{
+.page-title{
     font-size:34px;
-    margin:10px 0;
+    font-weight:normal;
+    margin-bottom:8px;
 }
 
-.muted{
-    color:var(--muted);
+.subtitle{
+    color:#827787;
+    margin-bottom:25px;
+    font-family:Arial,sans-serif;
 }
 
-/* =========================================================
-   BUTTONS
-   ========================================================= */
+/* ================= BUTTONS ================= */
+
+button{
+    font-family:inherit;
+}
 
 .primary{
-    border:0;
-    background:var(--accent);
+    background:var(--primary);
     color:white;
+    border:none;
     padding:11px 18px;
-    border-radius:12px;
+    border-radius:10px;
+    cursor:pointer;
 }
 
-.secondary{
-    border:1px solid var(--border);
-    background:var(--paper);
+.secondary-btn{
+    background:var(--secondary);
     color:var(--text);
-    padding:10px 15px;
-    border-radius:12px;
+    border:none;
+    padding:11px 18px;
+    border-radius:10px;
+    cursor:pointer;
 }
 
 .danger{
-    border:0;
-    background:#c87878;
-    color:white;
-    padding:9px 13px;
-    border-radius:10px;
+    background:#f0c4c4;
+    color:#7d3333;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
 }
 
-.toolbar{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
+/* ================= DIARY ================= */
+
+.diary-area{
+    display:grid;
+    grid-template-columns:1fr 180px;
+    gap:25px;
 }
 
-/* =========================================================
-   FORM
-   ========================================================= */
-
-.form-group{
-    margin-bottom:15px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:6px;
-    font-size:14px;
-}
-
-input,
 textarea,
+input,
 select{
     width:100%;
-    padding:11px 12px;
-    border:1px solid var(--border);
-    background:var(--paper);
-    color:var(--text);
+    padding:12px;
+    border:1px solid #dfd5e3;
     border-radius:10px;
+    background:white;
+    color:var(--text);
+    font-size:14px;
     outline:none;
 }
 
-textarea{
-    min-height:180px;
-    resize:vertical;
-}
-
-input:focus,
 textarea:focus,
+input:focus,
 select:focus{
-    border-color:var(--accent);
+    border-color:var(--primary);
 }
 
-/* =========================================================
-   DIARY BOOK
-   ========================================================= */
-
-.diary-book{
-    max-width:1000px;
-    margin:auto;
-    perspective:1800px;
-}
-
-.diary-spread{
-    min-height:590px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    background:var(--paper);
-    box-shadow:var(--shadow);
-    border-radius:8px;
-    overflow:hidden;
-    position:relative;
-}
-
-.diary-page{
-    padding:45px;
+.diary-text{
+    min-height:400px;
+    resize:vertical;
+    line-height:1.8;
     background:
         repeating-linear-gradient(
-            to bottom,
-            transparent 0,
+            transparent,
             transparent 31px,
-            rgba(130,110,90,.12) 32px
-        ),
-        var(--paper);
-    position:relative;
+            #e9dfe9 32px
+        );
 }
 
-.diary-page.left{
-    border-right:1px solid var(--border);
-}
-
-.page-number{
-    position:absolute;
-    bottom:15px;
-    left:50%;
-    transform:translateX(-50%);
-    color:var(--muted);
-    font-size:12px;
-}
-
-.diary-date{
-    color:var(--accent);
-    font-size:14px;
+.date-input{
     margin-bottom:15px;
 }
 
-.diary-title{
-    font-size:31px;
+.saved-entry{
+    margin-top:25px;
+    padding:18px;
+    border-left:4px solid var(--primary);
+    background:#faf5fc;
+    border-radius:10px;
+}
+
+.entry-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+/* ================= CALENDAR ================= */
+
+.calendar-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
     margin-bottom:20px;
-    font-weight:normal;
 }
 
-.diary-writing{
-    white-space:pre-wrap;
-    line-height:32px;
+.calendar-head button{
+    border:none;
+    background:var(--secondary);
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    cursor:pointer;
 }
 
-.page-turn-next{
-    animation:turnNext .65s ease;
+.calendar-title{
+    font-size:25px;
 }
 
-.page-turn-prev{
-    animation:turnPrev .65s ease;
+.calendar{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:7px;
 }
 
-@keyframes turnNext{
-    0%{
-        transform:rotateY(0);
-        transform-origin:left;
-    }
-    50%{
-        transform:rotateY(-12deg);
-    }
-    100%{
-        transform:rotateY(0);
-    }
+.weekday{
+    text-align:center;
+    font-family:Arial,sans-serif;
+    font-size:12px;
+    color:#887c8d;
+    padding:8px;
 }
 
-@keyframes turnPrev{
-    0%{
-        transform:rotateY(0);
-        transform-origin:right;
-    }
-    50%{
-        transform:rotateY(12deg);
-    }
-    100%{
-        transform:rotateY(0);
-    }
+.day{
+    min-height:80px;
+    background:#fbf8fc;
+    border:1px solid #eee5f0;
+    border-radius:10px;
+    padding:8px;
+    cursor:pointer;
 }
 
-/* =========================================================
-   MEMORY
-   ========================================================= */
+.day:hover{
+    background:#f1e7f4;
+}
+
+.day.today{
+    border:2px solid var(--primary);
+}
+
+.day.has-event:after{
+    content:"•";
+    display:block;
+    color:var(--primary);
+    font-size:20px;
+}
+
+.event-list{
+    margin-top:25px;
+}
+
+.event-card{
+    padding:15px;
+    background:#faf5fc;
+    border-radius:12px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+/* ================= MEMORIES ================= */
+
+.memory-upload{
+    border:2px dashed #cdbbd5;
+    border-radius:15px;
+    padding:30px;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.memory-upload input{
+    display:none;
+}
+
+.upload-label{
+    display:inline-block;
+    padding:12px 20px;
+    border-radius:10px;
+    background:var(--secondary);
+    cursor:pointer;
+}
 
 .memory-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-    gap:20px;
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:15px;
 }
 
 .memory-card{
-    background:var(--paper);
-    border:1px solid var(--border);
-    border-radius:15px;
+    position:relative;
+    aspect-ratio:1;
+    border-radius:12px;
     overflow:hidden;
-    box-shadow:var(--shadow);
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    background:#eee;
 }
 
 .memory-card img{
     width:100%;
-    height:190px;
+    height:100%;
     object-fit:cover;
-    display:block;
 }
 
-.memory-info{
-    padding:14px;
-}
-
-.memory-info h3{
-    margin-bottom:5px;
-}
-
-.memory-info p{
-    color:var(--muted);
-    font-size:13px;
-}
-
-/* =========================================================
-   CALENDAR
-   ========================================================= */
-
-.calendar{
-    background:var(--paper);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:20px;
-    box-shadow:var(--shadow);
-}
-
-.calendar-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.calendar-head h3{
-    font-size:25px;
-    font-weight:normal;
-}
-
-.calendar-week,
-.calendar-days{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-}
-
-.calendar-week div{
-    text-align:center;
-    color:var(--muted);
-    font-size:13px;
-    padding:10px 0;
-}
-
-.day{
-    min-height:75px;
-    border:1px solid rgba(180,160,140,.2);
-    padding:8px;
-    position:relative;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.day:hover{
-    background:var(--paper2);
-}
-
-.day.today{
-    background:var(--accent2);
-    font-weight:bold;
-}
-
-.day.empty{
-    background:rgba(0,0,0,.015);
-    cursor:default;
-}
-
-.day-dot{
-    width:6px;
-    height:6px;
-    background:var(--accent);
-    border-radius:50%;
+.memory-delete{
     position:absolute;
-    bottom:8px;
-    left:50%;
+    right:7px;
+    top:7px;
+    width:30px;
+    height:30px;
+    border:0;
+    border-radius:50%;
+    background:rgba(255,255,255,.9);
+    cursor:pointer;
 }
 
-/* =========================================================
-   SCHEDULE
-   ========================================================= */
-
-.event{
-    padding:15px;
-    border-left:4px solid var(--accent);
-    background:var(--paper);
-    border-radius:10px;
-    margin-bottom:10px;
-    border-top:1px solid var(--border);
-    border-right:1px solid var(--border);
-    border-bottom:1px solid var(--border);
-}
-
-.event-row{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-}
-
-.event-time{
-    font-size:14px;
-    color:var(--accent);
-}
-
-/* =========================================================
-   COLLAGE
-   ========================================================= */
+/* ================= COLLAGE ================= */
 
 .collage-layout{
     display:grid;
-    grid-template-columns:250px 1fr 250px;
-    gap:15px;
+    grid-template-columns:230px 1fr;
+    gap:20px;
 }
 
 .tool-panel{
-    background:var(--paper);
-    border:1px solid var(--border);
-    border-radius:16px;
+    background:#faf5fc;
+    border-radius:15px;
     padding:15px;
-    box-shadow:var(--shadow);
-    height:max-content;
 }
 
 .tool-panel h3{
-    margin-bottom:13px;
+    margin-bottom:10px;
+    margin-top:15px;
 }
 
-.tool-btn{
-    width:100%;
-    border:1px solid var(--border);
-    background:var(--paper2);
-    padding:10px;
-    border-radius:10px;
-    margin-bottom:7px;
-    text-align:left;
+.tool-panel h3:first-child{
+    margin-top:0;
 }
 
-.tool-btn:hover{
-    background:var(--accent2);
+.tool-group{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
 }
 
-.template-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:7px;
+.tool-small{
+    padding:8px 10px;
+    border:1px solid #ded1e2;
+    background:white;
+    border-radius:8px;
+    cursor:pointer;
 }
 
 .template-btn{
-    padding:10px 5px;
-    border:1px solid var(--border);
-    background:var(--paper2);
-    border-radius:8px;
-}
-
-.emoji-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:5px;
-}
-
-.emoji-btn{
-    border:1px solid var(--border);
-    background:var(--paper2);
-    border-radius:8px;
-    padding:6px;
-    font-size:21px;
+    flex:1;
+    min-width:60px;
 }
 
 .canvas-wrap{
-    background:#dcd3c7;
-    border-radius:18px;
-    padding:25px;
-    min-height:650px;
     display:flex;
     justify-content:center;
     align-items:center;
-    overflow:auto;
+    background:#eee8ef;
+    border-radius:15px;
+    padding:20px;
+    min-height:600px;
 }
 
 #collageCanvas{
-    width:600px;
-    height:600px;
-    max-width:100%;
-    position:relative;
-    overflow:hidden;
-    background:#fffaf0;
-    box-shadow:0 15px 40px rgba(0,0,0,.2);
-    background-size:cover;
-}
-
-.collage-object{
-    position:absolute;
-    user-select:none;
-    touch-action:none;
-    cursor:move;
-}
-
-.collage-photo{
-    width:160px;
-    height:160px;
-    object-fit:cover;
-    border:7px solid white;
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-}
-
-.polaroid{
     background:white;
-    padding:8px 8px 35px;
-    border:0;
+    box-shadow:0 8px 25px rgba(0,0,0,.15);
+    max-width:100%;
+    cursor:default;
 }
 
-.collage-text{
-    padding:5px;
-    font-size:27px;
-    font-weight:bold;
-    white-space:nowrap;
+/* ================= THEMES ================= */
+
+.theme-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:15px;
 }
 
-.collage-sticker{
-    font-size:42px;
-}
-
-.selected-object{
-    outline:2px dashed var(--accent);
-    outline-offset:4px;
-}
-
-.control-row{
+.theme-card{
+    height:100px;
+    border-radius:15px;
+    border:3px solid transparent;
+    cursor:pointer;
     display:flex;
-    gap:6px;
-    margin-top:8px;
+    align-items:flex-end;
+    padding:12px;
+    font-weight:bold;
 }
 
-.control-row button{
-    flex:1;
-    padding:8px;
-    border:1px solid var(--border);
-    background:var(--paper2);
-    border-radius:8px;
+.theme-card.selected{
+    border-color:var(--primary);
 }
 
-/* =========================================================
-   MODAL
-   ========================================================= */
+/* ================= MODAL ================= */
 
 .modal{
     position:fixed;
     inset:0;
-    background:rgba(40,30,20,.55);
-    z-index:500;
+    background:rgba(30,20,35,.5);
     display:none;
     align-items:center;
     justify-content:center;
+    z-index:5000;
     padding:20px;
 }
 
@@ -751,16 +566,14 @@ select:focus{
 }
 
 .modal-box{
-    width:min(600px,100%);
-    max-height:90vh;
-    overflow:auto;
-    background:var(--paper);
+    width:min(500px,100%);
+    background:white;
     border-radius:20px;
     padding:25px;
-    box-shadow:0 30px 80px rgba(0,0,0,.3);
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
-.modal-header{
+.modal-head{
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -769,105 +582,66 @@ select:focus{
 
 .close{
     border:0;
-    background:transparent;
-    font-size:30px;
-}
-
-/* =========================================================
-   THEME
-   ========================================================= */
-
-.theme-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.theme-card{
-    min-height:100px;
-    border:2px solid var(--border);
-    border-radius:15px;
-    padding:15px;
+    background:#eee;
+    width:35px;
+    height:35px;
+    border-radius:50%;
     cursor:pointer;
 }
 
-.theme-card:hover{
-    transform:translateY(-2px);
-}
-
-/* =========================================================
-   TOAST
-   ========================================================= */
+/* ================= TOAST ================= */
 
 .toast{
     position:fixed;
-    right:25px;
-    bottom:25px;
-    background:var(--text);
+    right:20px;
+    bottom:20px;
+    background:#403847;
     color:white;
-    padding:13px 18px;
+    padding:14px 18px;
     border-radius:12px;
+    transform:translateY(100px);
     opacity:0;
-    transform:translateY(15px);
     transition:.3s;
-    z-index:9999;
-    pointer-events:none;
+    z-index:10000;
+    font-family:Arial,sans-serif;
 }
 
 .toast.show{
-    opacity:1;
     transform:none;
+    opacity:1;
 }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+/* ================= RESPONSIVE ================= */
 
-@media(max-width:1000px){
+@media(max-width:800px){
 
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:static;
+        display:flex;
+        overflow-x:auto;
+        gap:5px;
+    }
+
+    .nav-btn{
+        min-width:max-content;
+        margin:0;
+    }
+
+    .diary-area,
     .collage-layout{
         grid-template-columns:1fr;
     }
 
-    .tool-panel{
-        width:100%;
-    }
-
-    .diary-spread{
-        grid-template-columns:1fr;
-    }
-
-    .diary-page.left{
-        border-right:0;
-        border-bottom:1px solid var(--border);
-    }
-
-}
-
-@media(max-width:700px){
-
-    .sidebar{
-        position:fixed;
-        left:-250px;
-        top:70px;
-        bottom:0;
-        z-index:200;
-    }
-
-    .sidebar.open{
-        left:0;
-    }
-
-    .content{
-        padding:20px 12px;
-    }
-
-    .topbar{
-        padding:0 15px;
+    .paper{
+        padding:25px 20px;
     }
 
     .calendar{
-        overflow:auto;
+        gap:3px;
     }
 
     .day{
@@ -875,38 +649,29 @@ select:focus{
         font-size:12px;
     }
 
-    .diary-page{
-        padding:28px;
+    .weekday{
+        padding:4px;
     }
-
-    #collageCanvas{
-        width:500px;
-        height:500px;
-    }
-
 }
 </style>
 </head>
 
 <body>
 
-<!-- =======================================================
-     BOOK COVER
-======================================================= -->
+<!-- ================= COVER ================= -->
 
-<div class="book-intro" id="bookIntro">
+<div class="cover-screen" id="coverScreen">
 
     <div class="book-cover">
 
-        <small>MY PERSONAL JOURNAL</small>
+        <div class="cover-decoration">📖✨</div>
 
-        <h1>My<br>Life Book</h1>
+        <h1>My Life<br>Book</h1>
 
-        <p>little moments, big memories ✦</p>
+        <p>A little place for my life, thoughts & memories.</p>
 
-        <button class="open-book-btn"
-                onclick="openBook()">
-            Open My Book 📖
+        <button class="open-btn" id="openBook">
+            Open My Book
         </button>
 
     </div>
@@ -914,3002 +679,1393 @@ select:focus{
 </div>
 
 
-<!-- =======================================================
-     APP
-======================================================= -->
+<!-- ================= MAIN APP ================= -->
 
-<div class="app" id="app">
+<div class="app">
 
-<header class="topbar">
+    <div class="topbar">
 
-    <button class="menu-btn"
-            onclick="toggleSidebar()">
-        ☰
-    </button>
-
-    <div class="brand">
-        My Life Book
-        <span>your little corner of life</span>
-    </div>
-
-    <div>
-        <button class="secondary"
-                onclick="showPage('settings')">
-            ⚙️
-        </button>
-    </div>
-
-</header>
-
-
-<div class="layout">
-
-<!-- =======================================================
-     SIDEBAR
-======================================================= -->
-
-<aside class="sidebar" id="sidebar">
-
-    <button class="nav-item active"
-            data-page="home"
-            onclick="showPage('home')">
-        🏠 Home
-    </button>
-
-    <button class="nav-item"
-            data-page="diary"
-            onclick="showPage('diary')">
-        📖 Diary
-    </button>
-
-    <button class="nav-item"
-            data-page="schedule"
-            onclick="showPage('schedule')">
-        📅 Schedule
-    </button>
-
-    <button class="nav-item"
-            data-page="tasks"
-            onclick="showPage('tasks')">
-        ✅ Tasks
-    </button>
-
-    <button class="nav-item"
-            data-page="memories"
-            onclick="showPage('memories')">
-        📸 Memories
-    </button>
-
-    <button class="nav-item"
-            data-page="calendar"
-            onclick="showPage('calendar')">
-        🗓️ Calendar
-    </button>
-
-    <button class="nav-item"
-            data-page="collage"
-            onclick="showPage('collage')">
-        🎨 Collage Maker
-    </button>
-
-    <button class="nav-item"
-            data-page="settings"
-            onclick="showPage('settings')">
-        🎨 Themes
-    </button>
-
-</aside>
-
-
-<!-- =======================================================
-     CONTENT
-======================================================= -->
-
-<main class="content">
-
-<!-- HOME -->
-
-<section class="page active" id="home">
-
-    <div class="page-heading">
-
-        <h2>Good day, storyteller ✦</h2>
-
-        <p id="homeDate"></p>
-
-    </div>
-
-
-    <div class="grid">
-
-        <div class="card">
-
-            <h3>📖 Diary Entries</h3>
-
-            <div class="stat"
-                 id="diaryCount">
-                0
-            </div>
-
-            <p class="muted">
-                little stories you've written
-            </p>
-
+        <div class="logo">
+            📖 <span>My Life Book</span>
         </div>
 
+        <div class="top-actions">
 
-        <div class="card">
+            <button class="icon-btn" id="notificationBtn">
+                🔔
+            </button>
 
-            <h3>📸 Memories</h3>
-
-            <div class="stat"
-                 id="memoryCount">
-                0
-            </div>
-
-            <p class="muted">
-                moments worth keeping
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>✅ Tasks</h3>
-
-            <div class="stat"
-                 id="taskCount">
-                0
-            </div>
-
-            <p class="muted">
-                things on your list
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h3>⏰ Next Up</h3>
-
-            <div id="nextEvent">
-                No upcoming schedule.
-            </div>
+            <button class="icon-btn" id="themeBtn">
+                🎨
+            </button>
 
         </div>
 
     </div>
 
 
-    <br>
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <button class="nav-btn active" data-page="diary">
+                <span>📖</span> Diary
+            </button>
+
+            <button class="nav-btn" data-page="calendar">
+                <span>📅</span> Calendar
+            </button>
+
+            <button class="nav-btn" data-page="memories">
+                <span>📸</span> Memories
+            </button>
+
+            <button class="nav-btn" data-page="collage">
+                <span>🎨</span> Collage Maker
+            </button>
+
+            <button class="nav-btn" data-page="themes">
+                <span>🌈</span> Themes
+            </button>
+
+        </aside>
 
 
-    <div class="card">
+        <!-- CONTENT -->
 
-        <h3>💭 Today's Thought</h3>
+        <main>
 
-        <br>
 
-        <textarea id="quickThought"
-                  placeholder="Write something you're thinking about..."></textarea>
+            <!-- ================= DIARY ================= -->
+
+            <section class="page active" id="diary">
+
+                <div class="paper">
+
+                    <h1 class="page-title">
+                        Dear Diary...
+                    </h1>
+
+                    <p class="subtitle">
+                        Tulis apa pun yang ingin kamu simpan hari ini ✍️
+                    </p>
+
+                    <div class="diary-area">
+
+                        <div>
+
+                            <input
+                                type="date"
+                                id="diaryDate"
+                                class="date-input"
+                            >
+
+                            <textarea
+                                id="diaryText"
+                                class="diary-text"
+                                placeholder="Dear diary... hari ini aku ingin menceritakan..."
+                            ></textarea>
+
+                            <br><br>
+
+                            <button class="primary" id="saveDiary">
+                                💾 Simpan Diary
+                            </button>
+
+                            <button class="secondary-btn" id="clearDiary">
+                                🧹 Bersihkan
+                            </button>
+
+                        </div>
+
+                        <div>
+
+                            <h3>My Mood</h3>
+
+                            <div
+                                class="tool-group"
+                                id="moodPicker"
+                                style="margin-top:12px;"
+                            >
+
+                                <button class="tool-small mood">
+                                    😊
+                                </button>
+
+                                <button class="tool-small mood">
+                                    😭
+                                </button>
+
+                                <button class="tool-small mood">
+                                    😴
+                                </button>
+
+                                <button class="tool-small mood">
+                                    😡
+                                </button>
+
+                                <button class="tool-small mood">
+                                    🥰
+                                </button>
+
+                                <button class="tool-small mood">
+                                    😎
+                                </button>
+
+                            </div>
+
+                            <p id="selectedMood"
+                               style="margin-top:15px;">
+                                Mood: belum dipilih
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div id="diaryEntries"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= CALENDAR ================= -->
+
+            <section class="page" id="calendar">
+
+                <div class="paper">
+
+                    <h1 class="page-title">My Calendar 📅</h1>
+
+                    <p class="subtitle">
+                        Atur jadwal dan jangan sampai lupa sesuatu.
+                    </p>
+
+                    <div class="calendar-head">
+
+                        <button id="prevMonth">‹</button>
+
+                        <div
+                            class="calendar-title"
+                            id="calendarTitle"
+                        ></div>
+
+                        <button id="nextMonth">›</button>
+
+                    </div>
+
+                    <div
+                        class="calendar"
+                        id="calendarGrid"
+                    ></div>
+
+                    <br>
+
+                    <button
+                        class="primary"
+                        id="addScheduleBtn"
+                    >
+                        ＋ Tambah Jadwal
+                    </button>
+
+                    <div class="event-list">
+
+                        <h3>Jadwal Mendatang</h3>
+
+                        <br>
+
+                        <div id="eventList"></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= MEMORIES ================= -->
+
+            <section class="page" id="memories">
+
+                <div class="paper">
+
+                    <h1 class="page-title">
+                        Memory Box 📸
+                    </h1>
+
+                    <p class="subtitle">
+                        Simpan momen-momen kecil yang ingin kamu ingat.
+                    </p>
+
+                    <div class="memory-upload">
+
+                        <div style="font-size:45px;">
+                            📷
+                        </div>
+
+                        <p style="margin:10px 0 15px;">
+                            Upload foto asli dari perangkatmu.
+                        </p>
+
+                        <label
+                            class="upload-label"
+                            for="memoryInput"
+                        >
+                            ＋ Upload Foto
+                        </label>
+
+                        <input
+                            type="file"
+                            id="memoryInput"
+                            accept="image/*"
+                            multiple
+                        >
+
+                    </div>
+
+                    <div
+                        class="memory-grid"
+                        id="memoryGrid"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= COLLAGE ================= -->
+
+            <section class="page" id="collage">
+
+                <div class="paper">
+
+                    <h1 class="page-title">
+                        Collage Maker 🎨
+                    </h1>
+
+                    <p class="subtitle">
+                        Bikin scrapbook kecilmu sendiri ✨
+                    </p>
+
+                    <div class="collage-layout">
+
+                        <div class="tool-panel">
+
+                            <h3>Template</h3>
+
+                            <div class="tool-group">
+
+                                <button
+                                    class="tool-small template-btn"
+                                    data-template="2"
+                                >
+                                    2 📸
+                                </button>
+
+                                <button
+                                    class="tool-small template-btn"
+                                    data-template="3"
+                                >
+                                    3 📸
+                                </button>
+
+                                <button
+                                    class="tool-small template-btn"
+                                    data-template="4"
+                                >
+                                    4 📸
+                                </button>
+
+                                <button
+                                    class="tool-small template-btn"
+                                    data-template="polaroid"
+                                >
+                                    🖼️
+                                </button>
+
+                            </div>
+
+
+                            <h3>Foto</h3>
+
+                            <input
+                                type="file"
+                                id="collageImageInput"
+                                accept="image/*"
+                                multiple
+                            >
+
+                            <h3>Tambah</h3>
+
+                            <div class="tool-group">
+
+                                <button
+                                    class="tool-small"
+                                    id="addText"
+                                >
+                                    T
+                                </button>
+
+                                <button
+                                    class="tool-small"
+                                    id="addEmoji"
+                                >
+                                    😊
+                                </button>
+
+                                <button
+                                    class="tool-small"
+                                    id="addSticker"
+                                >
+                                    ⭐
+                                </button>
+
+                            </div>
+
+
+                            <h3>Objek Terpilih</h3>
+
+                            <div class="tool-group">
+
+                                <button
+                                    class="tool-small"
+                                    id="rotateLeft"
+                                >
+                                    ↶
+                                </button>
+
+                                <button
+                                    class="tool-small"
+                                    id="rotateRight"
+                                >
+                                    ↷
+                                </button>
+
+                                <button
+                                    class="tool-small"
+                                    id="resizeUp"
+                                >
+                                    ＋
+                                </button>
+
+                                <button
+                                    class="tool-small"
+                                    id="resizeDown"
+                                >
+                                    −
+                                </button>
+
+                                <button
+                                    class="tool-small"
+                                    id="deleteObject"
+                                >
+                                    🗑️
+                                </button>
+
+                            </div>
+
+                            <br>
+
+                            <button
+                                class="primary"
+                                id="exportCollage"
+                                style="width:100%;"
+                            >
+                                ⬇ Export PNG
+                            </button>
+
+                            <br><br>
+
+                            <button
+                                class="secondary-btn"
+                                id="clearCanvas"
+                                style="width:100%;"
+                            >
+                                Clear Canvas
+                            </button>
+
+                        </div>
+
+
+                        <div class="canvas-wrap">
+
+                            <canvas
+                                id="collageCanvas"
+                                width="600"
+                                height="600"
+                            ></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= THEMES ================= -->
+
+            <section class="page" id="themes">
+
+                <div class="paper">
+
+                    <h1 class="page-title">
+                        Customize My Book 🌈
+                    </h1>
+
+                    <p class="subtitle">
+                        Pilih suasana yang paling cocok dengan diary-mu.
+                    </p>
+
+                    <div class="theme-grid">
+
+                        <div
+                            class="theme-card"
+                            data-theme="lavender"
+                            style="background:#e5d6ed;"
+                        >
+                            💜 Lavender
+                        </div>
+
+                        <div
+                            class="theme-card"
+                            data-theme="blue"
+                            style="background:#d5e5f2;"
+                        >
+                            💙 Ocean
+                        </div>
+
+                        <div
+                            class="theme-card"
+                            data-theme="green"
+                            style="background:#dcebdc;"
+                        >
+                            💚 Forest
+                        </div>
+
+                        <div
+                            class="theme-card"
+                            data-theme="cream"
+                            style="background:#f1e4c9;"
+                        >
+                            🤎 Vintage
+                        </div>
+
+                        <div
+                            class="theme-card"
+                            data-theme="pink"
+                            style="background:#f3d7df;"
+                        >
+                            🩷 Sweet
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- ================= SCHEDULE MODAL ================= -->
+
+<div class="modal" id="scheduleModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2>Tambah Jadwal 📅</h2>
+
+            <button
+                class="close"
+                id="closeSchedule"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <input
+            type="text"
+            id="scheduleTitle"
+            placeholder="Nama kegiatan"
+        >
 
         <br><br>
 
-        <button class="primary"
-                onclick="saveQuickThought()">
-            Save Thought
+        <input
+            type="date"
+            id="scheduleDate"
+        >
+
+        <br><br>
+
+        <input
+            type="time"
+            id="scheduleTime"
+        >
+
+        <br><br>
+
+        <button
+            class="primary"
+            id="saveSchedule"
+        >
+            Simpan Jadwal
         </button>
 
     </div>
-
-</section>
-
-
-<!-- =======================================================
-     DIARY
-======================================================= -->
-
-<section class="page" id="diary">
-
-    <div class="page-heading">
-
-        <h2>📖 My Diary</h2>
-
-        <p>Turn the pages and keep your stories here.</p>
-
-    </div>
-
-
-    <div class="toolbar">
-
-        <button class="primary"
-                onclick="newDiary()">
-            + New Entry
-        </button>
-
-        <button class="secondary"
-                onclick="previousDiary()">
-            ← Previous
-        </button>
-
-        <button class="secondary"
-                onclick="nextDiary()">
-            Next →
-        </button>
-
-    </div>
-
-
-    <div class="diary-book">
-
-        <div class="diary-spread"
-             id="diarySpread">
-
-            <div class="diary-page left">
-
-                <div class="diary-date"
-                     id="diaryDate">
-                    —
-                </div>
-
-                <h2 class="diary-title"
-                    id="diaryTitle">
-                    Welcome
-                </h2>
-
-                <div class="diary-writing"
-                     id="diaryText">
-                    Your diary pages will appear here.
-                </div>
-
-                <div class="page-number">
-                    <span id="leftPage">1</span>
-                </div>
-
-            </div>
-
-
-            <div class="diary-page">
-
-                <h3>✦ Today's Mood</h3>
-
-                <br>
-
-                <div id="diaryMood"
-                     style="font-size:45px">
-                    ☁️
-                </div>
-
-                <br>
-
-                <p class="muted">
-                    Every day doesn't have to be perfect.
-                    It only needs a page.
-                </p>
-
-                <br><br>
-
-                <button class="secondary"
-                        onclick="editCurrentDiary()">
-                    ✏️ Edit Page
-                </button>
-
-                <button class="danger"
-                        onclick="deleteCurrentDiary()">
-                    Delete
-                </button>
-
-                <div class="page-number">
-                    <span id="rightPage">2</span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =======================================================
-     SCHEDULE
-======================================================= -->
-
-<section class="page" id="schedule">
-
-    <div class="page-heading">
-
-        <h2>📅 Schedule</h2>
-
-        <p>Keep track of the things you need to do.</p>
-
-    </div>
-
-
-    <div class="toolbar">
-
-        <button class="primary"
-                onclick="openEventModal()">
-            + Add Event
-        </button>
-
-        <button class="secondary"
-                onclick="enableNotifications()">
-            🔔 Enable Notifications
-        </button>
-
-    </div>
-
-
-    <div id="eventList"></div>
-
-</section>
-
-
-<!-- =======================================================
-     TASKS
-======================================================= -->
-
-<section class="page" id="tasks">
-
-    <div class="page-heading">
-
-        <h2>✅ Tasks</h2>
-
-        <p>Small steps still count.</p>
-
-    </div>
-
-
-    <div class="toolbar">
-
-        <input id="taskInput"
-               placeholder="Add a task..."
-               style="max-width:400px">
-
-        <button class="primary"
-                onclick="addTask()">
-            Add
-        </button>
-
-    </div>
-
-
-    <div id="taskList"></div>
-
-</section>
-
-
-<!-- =======================================================
-     MEMORIES
-======================================================= -->
-
-<section class="page" id="memories">
-
-    <div class="page-heading">
-
-        <h2>📸 Memory Box</h2>
-
-        <p>Keep the moments you never want to forget.</p>
-
-    </div>
-
-
-    <div class="toolbar">
-
-        <label class="primary"
-               style="display:inline-block">
-
-            + Add Photo
-
-            <input type="file"
-                   accept="image/*"
-                   hidden
-                   onchange="addMemory(event)">
-
-        </label>
-
-        <button class="secondary"
-                onclick="showPage('collage')">
-            🎨 Create Collage
-        </button>
-
-    </div>
-
-
-    <div class="memory-grid"
-         id="memoryGrid"></div>
-
-</section>
-
-
-<!-- =======================================================
-     CALENDAR
-======================================================= -->
-
-<section class="page" id="calendar">
-
-    <div class="page-heading">
-
-        <h2>🗓️ Calendar</h2>
-
-        <p>Your life, one beautiful day at a time.</p>
-
-    </div>
-
-
-    <div class="calendar">
-
-        <div class="calendar-head">
-
-            <button class="secondary"
-                    onclick="changeMonth(-1)">
-                ←
-            </button>
-
-            <h3 id="calendarTitle"></h3>
-
-            <button class="secondary"
-                    onclick="changeMonth(1)">
-                →
-            </button>
-
-        </div>
-
-
-        <div class="calendar-week">
-
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-
-        </div>
-
-
-        <div class="calendar-days"
-             id="calendarDays"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =======================================================
-     COLLAGE
-======================================================= -->
-
-<section class="page" id="collage">
-
-    <div class="page-heading">
-
-        <h2>🎨 Memory Collage</h2>
-
-        <p>Turn your memories into a scrapbook.</p>
-
-    </div>
-
-
-    <div class="toolbar">
-
-        <button class="primary"
-                onclick="exportCollage()">
-            💾 Export PNG
-        </button>
-
-        <button class="secondary"
-                onclick="clearCollage()">
-            🗑️ Clear
-        </button>
-
-    </div>
-
-
-    <div class="collage-layout">
-
-        <!-- LEFT TOOLS -->
-
-        <div class="tool-panel">
-
-            <h3>📐 Templates</h3>
-
-            <div class="template-grid">
-
-                <button class="template-btn"
-                        onclick="applyTemplate(2)">
-                    2 Photos
-                </button>
-
-                <button class="template-btn"
-                        onclick="applyTemplate(3)">
-                    3 Photos
-                </button>
-
-                <button class="template-btn"
-                        onclick="applyTemplate(4)">
-                    4 Photos
-                </button>
-
-                <button class="template-btn"
-                        onclick="applyTemplate('grid')">
-                    Grid
-                </button>
-
-                <button class="template-btn"
-                        onclick="applyTemplate('polaroid')">
-                    Polaroid
-                </button>
-
-                <button class="template-btn"
-                        onclick="applyTemplate('free')">
-                    Free
-                </button>
-
-            </div>
-
-
-            <br>
-
-            <h3>📷 Photos</h3>
-
-            <label class="tool-btn">
-
-                + Upload Photo
-
-                <input type="file"
-                       accept="image/*"
-                       multiple
-                       hidden
-                       onchange="uploadCollagePhotos(event)">
-
-            </label>
-
-
-            <button class="tool-btn"
-                    onclick="addText()">
-                T Add Text
-            </button>
-
-
-            <br>
-
-            <h3>😊 Stickers</h3>
-
-            <div class="emoji-grid">
-
-                <button class="emoji-btn" onclick="addSticker('✨')">✨</button>
-                <button class="emoji-btn" onclick="addSticker('🌸')">🌸</button>
-                <button class="emoji-btn" onclick="addSticker('🎀')">🎀</button>
-                <button class="emoji-btn" onclick="addSticker('🦋')">🦋</button>
-                <button class="emoji-btn" onclick="addSticker('💕')">💕</button>
-                <button class="emoji-btn" onclick="addSticker('⭐')">⭐</button>
-                <button class="emoji-btn" onclick="addSticker('☁️')">☁️</button>
-                <button class="emoji-btn" onclick="addSticker('🌙')">🌙</button>
-                <button class="emoji-btn" onclick="addSticker('🧸')">🧸</button>
-                <button class="emoji-btn" onclick="addSticker('🍓')">🍓</button>
-                <button class="emoji-btn" onclick="addSticker('🎧')">🎧</button>
-                <button class="emoji-btn" onclick="addSticker('📚')">📚</button>
-
-            </div>
-
-        </div>
-
-
-        <!-- CANVAS -->
-
-        <div class="canvas-wrap">
-
-            <div id="collageCanvas"></div>
-
-        </div>
-
-
-        <!-- EDIT -->
-
-        <div class="tool-panel">
-
-            <h3>✏️ Selected Object</h3>
-
-            <p class="muted"
-               id="selectionInfo">
-                Select an object.
-            </p>
-
-            <div class="control-row">
-
-                <button onclick="resizeSelected(-10)">
-                    −
-                </button>
-
-                <button onclick="resizeSelected(10)">
-                    +
-                </button>
-
-            </div>
-
-
-            <div class="control-row">
-
-                <button onclick="rotateSelected(-15)">
-                    ↶
-                </button>
-
-                <button onclick="rotateSelected(15)">
-                    ↷
-                </button>
-
-            </div>
-
-
-            <div class="control-row">
-
-                <button onclick="moveLayer(-1)">
-                    ↓ Back
-                </button>
-
-                <button onclick="moveLayer(1)">
-                    ↑ Front
-                </button>
-
-            </div>
-
-
-            <br>
-
-
-            <button class="danger"
-                    style="width:100%"
-                    onclick="deleteSelected()">
-                🗑️ Delete Selected
-            </button>
-
-
-            <br><br>
-
-
-            <h3>🎨 Background</h3>
-
-            <div class="emoji-grid">
-
-                <button class="emoji-btn"
-                        style="background:#fffaf0"
-                        onclick="setCanvasBackground('#fffaf0')">
-                </button>
-
-                <button class="emoji-btn"
-                        style="background:#f2e6f7"
-                        onclick="setCanvasBackground('#f2e6f7')">
-                </button>
-
-                <button class="emoji-btn"
-                        style="background:#e8f3ef"
-                        onclick="setCanvasBackground('#e8f3ef')">
-                </button>
-
-                <button class="emoji-btn"
-                        style="background:#e9eef7"
-                        onclick="setCanvasBackground('#e9eef7')">
-                </button>
-
-                <button class="emoji-btn"
-                        style="background:#f8e4e4"
-                        onclick="setCanvasBackground('#f8e4e4')">
-                </button>
-
-                <button class="emoji-btn"
-                        style="background:#e8e0d5"
-                        onclick="setCanvasBackground('#e8e0d5')">
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =======================================================
-     SETTINGS
-======================================================= -->
-
-<section class="page" id="settings">
-
-    <div class="page-heading">
-
-        <h2>🎨 Theme Customization</h2>
-
-        <p>Make My Life Book feel like your own.</p>
-
-    </div>
-
-
-    <div class="theme-grid">
-
-        <div class="theme-card"
-             style="background:#f4efe7"
-             onclick="setTheme('classic')">
-
-            <h3>🤎 Classic</h3>
-            <p>Warm paper diary</p>
-
-        </div>
-
-
-        <div class="theme-card"
-             style="background:#eaf4f4"
-             onclick="setTheme('ocean')">
-
-            <h3>🩵 Ocean</h3>
-            <p>Soft blue journal</p>
-
-        </div>
-
-
-        <div class="theme-card"
-             style="background:#f7eafa"
-             onclick="setTheme('lavender')">
-
-            <h3>💜 Lavender</h3>
-            <p>Dreamy purple pages</p>
-
-        </div>
-
-
-        <div class="theme-card"
-             style="background:#eef4e8"
-             onclick="setTheme('sage')">
-
-            <h3>🌿 Sage</h3>
-            <p>Calm green diary</p>
-
-        </div>
-
-
-        <div class="theme-card"
-             style="background:#f8e8e8"
-             onclick="setTheme('rose')">
-
-            <h3>🌷 Rose</h3>
-            <p>Soft rosy pages</p>
-
-        </div>
-
-
-        <div class="theme-card"
-             style="background:#282624;color:white"
-             onclick="setTheme('night')">
-
-            <h3>🌙 Night</h3>
-            <p>Cozy dark journal</p>
-
-        </div>
-
-    </div>
-
-
-    <br>
-
-
-    <div class="card">
-
-        <h3>🔔 Notifications</h3>
-
-        <p class="muted">
-            Browser reminders for your schedules.
-        </p>
-
-        <br>
-
-        <button class="primary"
-                onclick="enableNotifications()">
-            Enable Notifications
-        </button>
-
-    </div>
-
-</section>
-
-</main>
-
-</div>
 
 </div>
 
 
-<!-- =======================================================
-     DIARY MODAL
-======================================================= -->
+<!-- ================= NOTIFICATION MODAL ================= -->
 
-<div class="modal"
-     id="diaryModal">
+<div class="modal" id="notificationModal">
 
     <div class="modal-box">
 
-        <div class="modal-header">
+        <div class="modal-head">
 
-            <h2>📖 Diary Entry</h2>
+            <h2>🔔 Reminder</h2>
 
-            <button class="close"
-                    onclick="closeModal('diaryModal')">
+            <button
+                class="close"
+                id="closeNotification"
+            >
                 ×
             </button>
 
         </div>
 
-
-        <div class="form-group">
-
-            <label>Date</label>
-
-            <input type="date"
-                   id="diaryInputDate">
-
+        <div id="notificationList">
+            Belum ada jadwal.
         </div>
-
-
-        <div class="form-group">
-
-            <label>Title</label>
-
-            <input id="diaryInputTitle"
-                   placeholder="Today was...">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Mood</label>
-
-            <select id="diaryInputMood">
-
-                <option>😊</option>
-                <option>🥰</option>
-                <option>😎</option>
-                <option>😌</option>
-                <option>😐</option>
-                <option>😔</option>
-                <option>😭</option>
-                <option>😴</option>
-
-            </select>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Your story</label>
-
-            <textarea id="diaryInputText"
-                      placeholder="Write whatever is on your mind..."></textarea>
-
-        </div>
-
-
-        <button class="primary"
-                onclick="saveDiary()">
-            Save Page
-        </button>
 
     </div>
 
 </div>
 
 
-<!-- =======================================================
-     EVENT MODAL
-======================================================= -->
-
-<div class="modal"
-     id="eventModal">
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h2>📅 Add Schedule</h2>
-
-            <button class="close"
-                    onclick="closeModal('eventModal')">
-                ×
-            </button>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Title</label>
-
-            <input id="eventTitle"
-                   placeholder="Study, meeting, project...">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Date</label>
-
-            <input type="date"
-                   id="eventDate">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Time</label>
-
-            <input type="time"
-                   id="eventTime">
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>Category</label>
-
-            <select id="eventCategory">
-
-                <option>School</option>
-                <option>Personal</option>
-                <option>Study</option>
-                <option>Organization</option>
-                <option>Other</option>
-
-            </select>
-
-        </div>
-
-
-        <button class="primary"
-                onclick="saveEvent()">
-            Save Schedule
-        </button>
-
-    </div>
-
-</div>
-
-
-<div class="toast"
-     id="toast">
-</div>
+<div class="toast" id="toast"></div>
 
 
 <script>
-/* =========================================================
-   DATA
-========================================================= */
 
-let diaries =
-    JSON.parse(localStorage.getItem("mlb_diaries")) || [];
+/* =====================================================
+   BASIC UTILITIES
+===================================================== */
 
-let events =
-    JSON.parse(localStorage.getItem("mlb_events")) || [];
-
-let tasks =
-    JSON.parse(localStorage.getItem("mlb_tasks")) || [];
-
-let memories =
-    JSON.parse(localStorage.getItem("mlb_memories")) || [];
-
-let quickThought =
-    localStorage.getItem("mlb_thought") || "";
-
-let currentDiaryIndex = 0;
-
-let calendarDate = new Date();
-
-let selectedObject = null;
-
-let collageObjects = [];
-
-let notifiedEvents =
-    JSON.parse(localStorage.getItem("mlb_notified")) || [];
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function saveAll(){
-
-    localStorage.setItem(
-        "mlb_diaries",
-        JSON.stringify(diaries)
-    );
-
-    localStorage.setItem(
-        "mlb_events",
-        JSON.stringify(events)
-    );
-
-    localStorage.setItem(
-        "mlb_tasks",
-        JSON.stringify(tasks)
-    );
-
-    localStorage.setItem(
-        "mlb_memories",
-        JSON.stringify(memories)
-    );
-
-}
-
-
-function todayISO(){
-
-    return new Date()
-        .toISOString()
-        .split("T")[0];
-
-}
-
-
-function formatDate(date){
-
-    if(!date) return "";
-
-    return new Date(date+"T00:00:00")
-        .toLocaleDateString(
-            "en-US",
-            {
-                day:"numeric",
-                month:"long",
-                year:"numeric"
-            }
-        );
-
-}
-
-
-function escapeHTML(str){
-
-    return String(str || "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
+const $ = id => document.getElementById(id);
 
 function showToast(message){
 
-    const toast=
-        document.getElementById("toast");
+    const toast = $("toast");
 
-    toast.textContent=message;
+    toast.textContent = message;
 
     toast.classList.add("show");
 
     setTimeout(()=>{
         toast.classList.remove("show");
-    },2800);
-
+    },2500);
 }
 
 
-function closeModal(id){
+/* =====================================================
+   COVER
+===================================================== */
 
-    document
-        .getElementById(id)
-        .classList.remove("show");
+$("openBook").addEventListener("click",()=>{
 
-}
+    $("coverScreen").classList.add("hide");
 
-
-/* =========================================================
-   BOOK OPEN
-========================================================= */
-
-function openBook(){
-
-    document
-        .getElementById("bookIntro")
-        .classList.add("hide");
-
-    document
-        .getElementById("app")
-        .classList.add("show");
-
-    renderAll();
-
-}
+});
 
 
-/* =========================================================
+/* =====================================================
    NAVIGATION
-========================================================= */
+===================================================== */
 
-function toggleSidebar(){
+document.querySelectorAll(".nav-btn").forEach(button=>{
 
-    document
-        .getElementById("sidebar")
-        .classList.toggle("open");
+    button.addEventListener("click",()=>{
 
-}
+        document.querySelectorAll(".nav-btn")
+            .forEach(btn=>btn.classList.remove("active"));
 
+        document.querySelectorAll(".page")
+            .forEach(page=>page.classList.remove("active"));
 
-function showPage(page){
+        button.classList.add("active");
 
-    document
-        .querySelectorAll(".page")
-        .forEach(p=>{
-            p.classList.remove("active");
-        });
+        $(button.dataset.page).classList.add("active");
 
-    document
-        .getElementById(page)
-        .classList.add("active");
+        if(button.dataset.page==="calendar"){
+            renderCalendar();
+        }
 
+        if(button.dataset.page==="memories"){
+            renderMemories();
+        }
 
-    document
-        .querySelectorAll(".nav-item")
-        .forEach(btn=>{
-            btn.classList.toggle(
-                "active",
-                btn.dataset.page===page
-            );
-        });
+    });
+
+});
 
 
-    document
-        .getElementById("sidebar")
-        .classList.remove("open");
+/* =====================================================
+   DIARY
+===================================================== */
+
+let diaries =
+    JSON.parse(localStorage.getItem("myLifeDiaries") || "[]");
+
+let currentMood = "";
+
+$("diaryDate").value =
+    new Date().toISOString().split("T")[0];
 
 
-    if(page==="calendar")
-        renderCalendar();
+document.querySelectorAll(".mood").forEach(btn=>{
 
-    if(page==="collage")
-        renderCollage();
+    btn.addEventListener("click",()=>{
 
-}
+        currentMood = btn.textContent;
 
+        $("selectedMood").textContent =
+            "Mood: " + currentMood;
 
-/* =========================================================
-   HOME
-========================================================= */
+    });
 
-function renderHome(){
-
-    document.getElementById("homeDate")
-        .textContent=
-        new Date().toLocaleDateString(
-            "en-US",
-            {
-                weekday:"long",
-                day:"numeric",
-                month:"long",
-                year:"numeric"
-            }
-        );
+});
 
 
-    document.getElementById("diaryCount")
-        .textContent=diaries.length;
+$("saveDiary").addEventListener("click",()=>{
 
-    document.getElementById("memoryCount")
-        .textContent=memories.length;
+    const text = $("diaryText").value.trim();
+    const date = $("diaryDate").value;
 
-    document.getElementById("taskCount")
-        .textContent=
-        tasks.filter(t=>!t.done).length;
+    if(!text){
 
+        showToast("Tulis diary dulu ya ✍️");
 
-    document.getElementById("quickThought")
-        .value=quickThought;
+        return;
+    }
 
+    diaries.unshift({
 
-    renderNextEvent();
+        id:Date.now(),
+        date,
+        text,
+        mood:currentMood
 
-}
-
-
-function saveQuickThought(){
-
-    quickThought=
-        document.getElementById("quickThought")
-        .value;
+    });
 
     localStorage.setItem(
-        "mlb_thought",
-        quickThought
+        "myLifeDiaries",
+        JSON.stringify(diaries)
     );
 
-    showToast("Thought saved ✦");
+    $("diaryText").value = "";
 
-}
+    renderDiaries();
 
+    showToast("Diary berhasil disimpan 💜");
 
-function renderNextEvent(){
+});
 
-    const now=new Date();
 
-    const upcoming=events
-        .map(e=>({
-            ...e,
-            dateTime:new Date(
-                e.date+"T"+e.time
-            )
-        }))
-        .filter(e=>e.dateTime>now)
-        .sort((a,b)=>
-            a.dateTime-b.dateTime
-        );
+$("clearDiary").addEventListener("click",()=>{
 
+    $("diaryText").value = "";
 
-    const box=
-        document.getElementById("nextEvent");
+});
 
 
-    if(!upcoming.length){
+function renderDiaries(){
 
-        box.innerHTML=
-            `<p class="muted">
-                No upcoming schedule.
-            </p>`;
+    const container = $("diaryEntries");
 
-        return;
+    container.innerHTML = "";
 
-    }
+    diaries.forEach(entry=>{
 
+        const card = document.createElement("div");
 
-    const e=upcoming[0];
+        card.className = "saved-entry";
 
-    const diff=e.dateTime-now;
+        card.innerHTML = `
 
-    const mins=
-        Math.floor(diff/60000);
+            <div class="entry-head">
 
-    let countdown;
-
-    if(mins<60)
-        countdown=`in ${mins} min`;
-
-    else{
-
-        const h=Math.floor(mins/60);
-
-        const m=mins%60;
-
-        countdown=
-            `in ${h}h ${m}m`;
-
-    }
-
-
-    box.innerHTML=`
-
-        <h3>
-            ${escapeHTML(e.title)}
-        </h3>
-
-        <p class="event-time">
-            ${e.date} • ${e.time}
-        </p>
-
-        <br>
-
-        <strong>
-            ⏰ ${countdown}
-        </strong>
-
-    `;
-
-}
-
-
-/* =========================================================
-   DIARY
-========================================================= */
-
-function newDiary(){
-
-    document.getElementById("diaryInputDate")
-        .value=todayISO();
-
-    document.getElementById("diaryInputTitle")
-        .value="";
-
-    document.getElementById("diaryInputText")
-        .value="";
-
-    document.getElementById("diaryInputMood")
-        .value="😊";
-
-    document
-        .getElementById("diaryModal")
-        .classList.add("show");
-
-}
-
-
-function saveDiary(){
-
-    const diary={
-
-        id:Date.now(),
-
-        date:
-            document.getElementById("diaryInputDate").value,
-
-        title:
-            document.getElementById("diaryInputTitle").value
-            ||"Untitled Page",
-
-        mood:
-            document.getElementById("diaryInputMood").value,
-
-        text:
-            document.getElementById("diaryInputText").value
-
-    };
-
-
-    diaries.push(diary);
-
-    diaries.sort((a,b)=>
-        b.date.localeCompare(a.date)
-    );
-
-
-    currentDiaryIndex=0;
-
-    saveAll();
-
-    closeModal("diaryModal");
-
-    renderDiary();
-
-    renderHome();
-
-    showToast("Diary page saved 📖");
-
-}
-
-
-function renderDiary(){
-
-    if(!diaries.length){
-
-        document.getElementById("diaryDate")
-            .textContent="Your first page";
-
-        document.getElementById("diaryTitle")
-            .textContent="Welcome";
-
-        document.getElementById("diaryText")
-            .textContent=
-            "Start writing your first story...";
-
-        document.getElementById("diaryMood")
-            .textContent="☁️";
-
-        return;
-
-    }
-
-
-    const d=diaries[currentDiaryIndex];
-
-    document.getElementById("diaryDate")
-        .textContent=formatDate(d.date);
-
-    document.getElementById("diaryTitle")
-        .textContent=d.title;
-
-    document.getElementById("diaryText")
-        .textContent=d.text;
-
-    document.getElementById("diaryMood")
-        .textContent=d.mood;
-
-    document.getElementById("leftPage")
-        .textContent=currentDiaryIndex*2+1;
-
-    document.getElementById("rightPage")
-        .textContent=currentDiaryIndex*2+2;
-
-}
-
-
-function animateDiary(type){
-
-    const spread=
-        document.getElementById("diarySpread");
-
-    spread.classList.remove(
-        "page-turn-next",
-        "page-turn-prev"
-    );
-
-    void spread.offsetWidth;
-
-    spread.classList.add(
-        type==="next"
-        ?"page-turn-next"
-        :"page-turn-prev"
-    );
-
-}
-
-
-function nextDiary(){
-
-    if(!diaries.length) return;
-
-    if(currentDiaryIndex<
-       diaries.length-1){
-
-        currentDiaryIndex++;
-
-        animateDiary("next");
-
-        setTimeout(renderDiary,100);
-
-    }
-
-}
-
-
-function previousDiary(){
-
-    if(!diaries.length) return;
-
-    if(currentDiaryIndex>0){
-
-        currentDiaryIndex--;
-
-        animateDiary("prev");
-
-        setTimeout(renderDiary,100);
-
-    }
-
-}
-
-
-function editCurrentDiary(){
-
-    if(!diaries.length) return;
-
-    const d=diaries[currentDiaryIndex];
-
-    document.getElementById("diaryInputDate")
-        .value=d.date;
-
-    document.getElementById("diaryInputTitle")
-        .value=d.title;
-
-    document.getElementById("diaryInputMood")
-        .value=d.mood;
-
-    document.getElementById("diaryInputText")
-        .value=d.text;
-
-
-    document
-        .getElementById("diaryModal")
-        .classList.add("show");
-
-
-    const oldSave=saveDiary;
-
-}
-
-
-function deleteCurrentDiary(){
-
-    if(!diaries.length) return;
-
-    if(!confirm("Delete this diary page?"))
-        return;
-
-    diaries.splice(
-        currentDiaryIndex,
-        1
-    );
-
-    currentDiaryIndex=
-        Math.max(
-            0,
-            currentDiaryIndex-1
-        );
-
-    saveAll();
-
-    renderDiary();
-
-    renderHome();
-
-}
-
-
-/* =========================================================
-   SCHEDULE
-========================================================= */
-
-function openEventModal(){
-
-    document.getElementById("eventDate")
-        .value=todayISO();
-
-    document.getElementById("eventTime")
-        .value="12:00";
-
-    document.getElementById("eventTitle")
-        .value="";
-
-
-    document
-        .getElementById("eventModal")
-        .classList.add("show");
-
-}
-
-
-function saveEvent(){
-
-    const event={
-
-        id:Date.now(),
-
-        title:
-            document.getElementById("eventTitle").value
-            ||"Untitled Event",
-
-        date:
-            document.getElementById("eventDate").value,
-
-        time:
-            document.getElementById("eventTime").value,
-
-        category:
-            document.getElementById("eventCategory").value
-
-    };
-
-
-    events.push(event);
-
-    events.sort((a,b)=>
-        (a.date+a.time)
-        .localeCompare(
-            b.date+b.time
-        )
-    );
-
-
-    saveAll();
-
-    closeModal("eventModal");
-
-    renderEvents();
-
-    renderCalendar();
-
-    renderHome();
-
-    showToast("Schedule added 📅");
-
-}
-
-
-function renderEvents(){
-
-    const list=
-        document.getElementById("eventList");
-
-    if(!events.length){
-
-        list.innerHTML=`
-            <div class="card">
-                <p class="muted">
-                    No schedules yet.
-                </p>
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    list.innerHTML=
-        events.map(e=>`
-
-            <div class="event">
-
-                <div class="event-row">
-
-                    <div>
-
-                        <h3>
-                            ${escapeHTML(e.title)}
-                        </h3>
-
-                        <p class="muted">
-                            ${escapeHTML(e.category)}
-                        </p>
-
-                    </div>
-
-                    <div style="text-align:right">
-
-                        <div class="event-time">
-                            ${e.date}
-                        </div>
-
-                        <strong>
-                            ${e.time}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-                <br>
+                <strong>
+                    ${entry.date}
+                    ${entry.mood || ""}
+                </strong>
 
                 <button
                     class="danger"
-                    onclick="deleteEvent(${e.id})">
-                    Delete
+                    data-delete-diary="${entry.id}"
+                >
+                    Hapus
                 </button>
 
             </div>
 
-        `).join("");
+            <div style="white-space:pre-wrap;">
+                ${escapeHTML(entry.text)}
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
 
 }
 
 
-function deleteEvent(id){
+document.addEventListener("click",e=>{
 
-    events=
-        events.filter(e=>e.id!==id);
+    const id = e.target.dataset.deleteDiary;
 
-    saveAll();
+    if(id){
+
+        diaries =
+            diaries.filter(item=>item.id != id);
+
+        localStorage.setItem(
+            "myLifeDiaries",
+            JSON.stringify(diaries)
+        );
+
+        renderDiaries();
+
+        showToast("Diary dihapus.");
+
+    }
+
+});
+
+
+function escapeHTML(str){
+
+    return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+renderDiaries();
+
+
+/* =====================================================
+   CALENDAR
+===================================================== */
+
+let calendarDate = new Date();
+
+let schedules =
+    JSON.parse(localStorage.getItem("myLifeSchedules") || "[]");
+
+
+function renderCalendar(){
+
+    const year = calendarDate.getFullYear();
+
+    const month = calendarDate.getMonth();
+
+    const monthNames = [
+        "Januari","Februari","Maret","April",
+        "Mei","Juni","Juli","Agustus",
+        "September","Oktober","November","Desember"
+    ];
+
+    $("calendarTitle").textContent =
+        monthNames[month] + " " + year;
+
+    const grid = $("calendarGrid");
+
+    grid.innerHTML = "";
+
+    [
+        "Min","Sen","Sel","Rab",
+        "Kam","Jum","Sab"
+    ].forEach(day=>{
+
+        const el = document.createElement("div");
+
+        el.className = "weekday";
+
+        el.textContent = day;
+
+        grid.appendChild(el);
+
+    });
+
+
+    const firstDay =
+        new Date(year,month,1).getDay();
+
+    const days =
+        new Date(year,month+1,0).getDate();
+
+
+    for(let i=0;i<firstDay;i++){
+
+        grid.appendChild(
+            document.createElement("div")
+        );
+
+    }
+
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+
+    for(let day=1;day<=days;day++){
+
+        const date =
+            `${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+
+        const el =
+            document.createElement("div");
+
+        el.className = "day";
+
+        if(date===today){
+            el.classList.add("today");
+        }
+
+        if(
+            schedules.some(
+                event=>event.date===date
+            )
+        ){
+            el.classList.add("has-event");
+        }
+
+        el.innerHTML =
+            `<strong>${day}</strong>`;
+
+        el.addEventListener("click",()=>{
+
+            $("scheduleDate").value = date;
+
+            $("scheduleModal").classList.add("show");
+
+        });
+
+        grid.appendChild(el);
+
+    }
 
     renderEvents();
 
+}
+
+
+$("prevMonth").addEventListener("click",()=>{
+
+    calendarDate.setMonth(
+        calendarDate.getMonth()-1
+    );
+
     renderCalendar();
 
-    renderHome();
-
-}
+});
 
 
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
+$("nextMonth").addEventListener("click",()=>{
 
-async function enableNotifications(){
+    calendarDate.setMonth(
+        calendarDate.getMonth()+1
+    );
 
-    if(!("Notification" in window)){
+    renderCalendar();
 
-        showToast(
-            "Your browser does not support notifications."
-        );
+});
+
+
+$("addScheduleBtn").addEventListener("click",()=>{
+
+    $("scheduleDate").value =
+        new Date().toISOString().split("T")[0];
+
+    $("scheduleModal").classList.add("show");
+
+});
+
+
+$("closeSchedule").addEventListener("click",()=>{
+
+    $("scheduleModal").classList.remove("show");
+
+});
+
+
+$("saveSchedule").addEventListener("click",()=>{
+
+    const title =
+        $("scheduleTitle").value.trim();
+
+    const date =
+        $("scheduleDate").value;
+
+    const time =
+        $("scheduleTime").value;
+
+    if(!title || !date || !time){
+
+        showToast("Lengkapi jadwal dulu ya 📅");
 
         return;
-
     }
 
-
-    const permission=
-        await Notification.requestPermission();
-
-
-    if(permission==="granted"){
-
-        showToast(
-            "Notifications enabled 🔔"
-        );
-
-        new Notification(
-            "My Life Book",
-            {
-                body:
-                    "Your schedule reminders are active ✦"
-            }
-        );
-
-    }
-
-}
-
-
-function checkNotifications(){
-
-    if(!("Notification" in window))
-        return;
-
-    if(Notification.permission!=="granted")
-        return;
-
-
-    const now=new Date();
-
-    const date=
-        now.toISOString().split("T")[0];
-
-    const time=
-        String(now.getHours()).padStart(2,"0")
-        +":"
-        +
-        String(now.getMinutes()).padStart(2,"0");
-
-
-    events.forEach(e=>{
-
-        if(e.date!==date)
-            return;
-
-        if(e.time!==time)
-            return;
-
-
-        const key=
-            e.id+"_"+date+"_"+time;
-
-
-        if(notifiedEvents.includes(key))
-            return;
-
-
-        new Notification(
-            "🔔 My Life Book Reminder",
-            {
-                body:
-                    `${e.title} starts now!`
-            }
-        );
-
-
-        showToast(
-            `🔔 ${e.title} starts now!`
-        );
-
-
-        notifiedEvents.push(key);
-
-
-        localStorage.setItem(
-            "mlb_notified",
-            JSON.stringify(notifiedEvents)
-        );
-
-    });
-
-}
-
-
-setInterval(
-    checkNotifications,
-    15000
-);
-
-
-/* =========================================================
-   TASKS
-========================================================= */
-
-function addTask(){
-
-    const input=
-        document.getElementById("taskInput");
-
-    const text=input.value.trim();
-
-    if(!text) return;
-
-
-    tasks.push({
+    schedules.push({
 
         id:Date.now(),
-
-        text,
-
-        done:false
+        title,
+        date,
+        time,
+        notified:false
 
     });
 
+    localStorage.setItem(
+        "myLifeSchedules",
+        JSON.stringify(schedules)
+    );
 
-    input.value="";
+    $("scheduleTitle").value = "";
 
-    saveAll();
+    $("scheduleTime").value = "";
 
-    renderTasks();
+    $("scheduleModal").classList.remove("show");
 
-    renderHome();
+    renderCalendar();
 
-}
+    showToast("Jadwal berhasil ditambahkan 🔔");
 
-
-function renderTasks(){
-
-    const list=
-        document.getElementById("taskList");
+});
 
 
-    if(!tasks.length){
+function renderEvents(){
 
-        list.innerHTML=`
-            <div class="card">
-                <p class="muted">
-                    Your task list is empty ✦
-                </p>
-            </div>
-        `;
+    const container = $("eventList");
+
+    container.innerHTML = "";
+
+    const sorted =
+        [...schedules].sort(
+            (a,b)=>
+            (a.date+a.time)
+            .localeCompare(b.date+b.time)
+        );
+
+    if(!sorted.length){
+
+        container.innerHTML =
+            "<p>Belum ada jadwal ✨</p>";
 
         return;
-
     }
 
+    sorted.forEach(event=>{
 
-    list.innerHTML=
-        tasks.map(t=>`
+        const card =
+            document.createElement("div");
 
-            <div class="card"
-                 style="margin-bottom:10px">
+        card.className = "event-card";
 
-                <div style="
-                    display:flex;
-                    justify-content:space-between;
-                    align-items:center;
-                    gap:10px;
-                ">
+        card.innerHTML = `
 
-                    <label style="
-                        display:flex;
-                        gap:10px;
-                        align-items:center;
-                    ">
+            <div>
 
-                        <input
-                            type="checkbox"
-                            style="width:auto"
-                            ${t.done?"checked":""}
-                            onchange="toggleTask(${t.id})">
+                <strong>
+                    ${escapeHTML(event.title)}
+                </strong>
 
-                        <span style="
-                            ${t.done
-                            ?"text-decoration:line-through;color:var(--muted)"
-                            :""}
-                        ">
-                            ${escapeHTML(t.text)}
-                        </span>
-
-                    </label>
-
-
-                    <button
-                        class="danger"
-                        onclick="deleteTask(${t.id})">
-                        ×
-                    </button>
-
+                <div style="margin-top:5px;color:#817686;">
+                    📅 ${event.date}
+                    &nbsp; ⏰ ${event.time}
                 </div>
 
             </div>
 
-        `).join("");
+            <button
+                class="danger"
+                data-delete-event="${event.id}"
+            >
+                Hapus
+            </button>
+
+        `;
+
+        container.appendChild(card);
+
+    });
 
 }
 
 
-function toggleTask(id){
+document.addEventListener("click",e=>{
 
-    const t=
-        tasks.find(t=>t.id===id);
+    const id = e.target.dataset.deleteEvent;
 
-    if(t)
-        t.done=!t.done;
+    if(id){
 
-    saveAll();
+        schedules =
+            schedules.filter(
+                event=>event.id != id
+            );
 
-    renderTasks();
+        localStorage.setItem(
+            "myLifeSchedules",
+            JSON.stringify(schedules)
+        );
 
-    renderHome();
+        renderCalendar();
+
+        showToast("Jadwal dihapus.");
+
+    }
+
+});
+
+
+/* =====================================================
+   REMINDER
+===================================================== */
+
+function checkReminders(){
+
+    const now = new Date();
+
+    schedules.forEach(event=>{
+
+        const eventTime =
+            new Date(
+                `${event.date}T${event.time}`
+            );
+
+        if(
+            !event.notified &&
+            Math.abs(now-eventTime)<30000
+        ){
+
+            event.notified = true;
+
+            showToast(
+                `🔔 Waktunya: ${event.title}`
+            );
+
+            if(
+                "Notification" in window &&
+                Notification.permission==="granted"
+            ){
+
+                new Notification(
+                    "My Life Book 🔔",
+                    {
+                        body:
+                        `Waktunya ${event.title}!`
+                    }
+                );
+
+            }
+
+        }
+
+    });
+
+    localStorage.setItem(
+        "myLifeSchedules",
+        JSON.stringify(schedules)
+    );
+
+}
+
+setInterval(checkReminders,30000);
+
+
+$("notificationBtn").addEventListener("click",()=>{
+
+    renderNotifications();
+
+    $("notificationModal").classList.add("show");
+
+});
+
+
+$("closeNotification").addEventListener("click",()=>{
+
+    $("notificationModal").classList.remove("show");
+
+});
+
+
+function renderNotifications(){
+
+    const list = $("notificationList");
+
+    if(!schedules.length){
+
+        list.textContent =
+            "Belum ada jadwal.";
+
+        return;
+    }
+
+    list.innerHTML = "";
+
+    schedules
+        .sort((a,b)=>
+            (a.date+a.time)
+            .localeCompare(b.date+b.time)
+        )
+        .forEach(event=>{
+
+            const div =
+                document.createElement("div");
+
+            div.style.padding = "12px";
+
+            div.style.borderBottom =
+                "1px solid #eee";
+
+            div.innerHTML = `
+                🔔 <strong>
+                ${escapeHTML(event.title)}
+                </strong>
+                <br>
+                <small>
+                ${event.date} • ${event.time}
+                </small>
+            `;
+
+            list.appendChild(div);
+
+        });
 
 }
 
 
-function deleteTask(id){
+/* Request browser notification permission */
 
-    tasks=
-        tasks.filter(t=>t.id!==id);
+if(
+    "Notification" in window &&
+    Notification.permission==="default"
+){
 
-    saveAll();
-
-    renderTasks();
-
-    renderHome();
+    document.addEventListener(
+        "click",
+        ()=>{
+            Notification.requestPermission();
+        },
+        {once:true}
+    );
 
 }
 
 
-/* =========================================================
-   MEMORIES
-========================================================= */
+/* =====================================================
+   MEMORY BOX
+===================================================== */
 
-function addMemory(event){
-
-    const files=
-        [...event.target.files];
-
-
-    files.forEach(file=>{
-
-        const reader=
-            new FileReader();
+let memories =
+    JSON.parse(
+        localStorage.getItem("myLifeMemories") || "[]"
+    );
 
 
-        reader.onload=function(e){
+$("memoryInput").addEventListener("change",e=>{
 
-            memories.unshift({
+    [...e.target.files].forEach(file=>{
+
+        const reader = new FileReader();
+
+        reader.onload = event=>{
+
+            memories.push({
 
                 id:Date.now()+Math.random(),
-
-                image:e.target.result,
-
-                title:file.name
-                    .replace(/\.[^/.]+$/,""),
-
-                date:todayISO()
+                src:event.target.result
 
             });
 
-
-            saveAll();
+            localStorage.setItem(
+                "myLifeMemories",
+                JSON.stringify(memories)
+            );
 
             renderMemories();
 
-            renderHome();
-
-            showToast(
-                "Memory added 📸"
-            );
-
         };
-
 
         reader.readAsDataURL(file);
 
     });
 
-
-    event.target.value="";
-
-}
+});
 
 
 function renderMemories(){
 
-    const grid=
-        document.getElementById("memoryGrid");
+    const grid = $("memoryGrid");
 
+    grid.innerHTML = "";
 
-    if(!memories.length){
+    memories.forEach(memory=>{
 
-        grid.innerHTML=`
-            <div class="card">
-                <p class="muted">
-                    No memories yet. Add your first photo ✦
-                </p>
-            </div>
+        const card =
+            document.createElement("div");
+
+        card.className = "memory-card";
+
+        card.innerHTML = `
+
+            <img src="${memory.src}">
+
+            <button
+                class="memory-delete"
+                data-delete-memory="${memory.id}"
+            >
+                ×
+            </button>
+
         `;
 
-        return;
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+document.addEventListener("click",e=>{
+
+    const id =
+        e.target.dataset.deleteMemory;
+
+    if(id){
+
+        memories =
+            memories.filter(
+                memory=>memory.id != id
+            );
+
+        localStorage.setItem(
+            "myLifeMemories",
+            JSON.stringify(memories)
+        );
+
+        renderMemories();
 
     }
 
-
-    grid.innerHTML=
-        memories.map(m=>`
-
-            <div class="memory-card">
-
-                <img
-                    src="${m.image}"
-                    alt="Memory">
-
-                <div class="memory-info">
-
-                    <h3>
-                        ${escapeHTML(m.title)}
-                    </h3>
-
-                    <p>
-                        ${formatDate(m.date)}
-                    </p>
-
-                    <br>
-
-                    <button
-                        class="danger"
-                        onclick="deleteMemory('${m.id}')">
-                        Delete
-                    </button>
-
-                </div>
-
-            </div>
-
-        `).join("");
-
-}
+});
 
 
-function deleteMemory(id){
-
-    memories=
-        memories.filter(
-            m=>String(m.id)!==String(id)
-        );
-
-    saveAll();
-
-    renderMemories();
-
-    renderHome();
-
-}
+renderMemories();
 
 
-/* =========================================================
-   CALENDAR
-========================================================= */
+/* =====================================================
+   COLLAGE MAKER
+===================================================== */
 
-function changeMonth(amount){
+const canvas = $("collageCanvas");
 
-    calendarDate.setMonth(
-        calendarDate.getMonth()+amount
+const ctx = canvas.getContext("2d");
+
+let objects = [];
+
+let selectedObject = null;
+
+let dragging = false;
+
+let dragOffsetX = 0;
+
+let dragOffsetY = 0;
+
+
+/* Background */
+
+function drawCanvas(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
     );
 
-    renderCalendar();
-
-}
-
-
-function renderCalendar(){
-
-    const year=
-        calendarDate.getFullYear();
-
-    const month=
-        calendarDate.getMonth();
-
-
-    document.getElementById("calendarTitle")
-        .textContent=
-        new Date(year,month,1)
-        .toLocaleDateString(
-            "en-US",
-            {
-                month:"long",
-                year:"numeric"
-            }
-        );
-
-
-    const firstDay=
-        new Date(year,month,1)
-        .getDay();
-
-    const daysInMonth=
-        new Date(year,month+1,0)
-        .getDate();
-
-
-    const container=
-        document.getElementById("calendarDays");
-
-    container.innerHTML="";
-
-
-    for(let i=0;i<firstDay;i++){
-
-        const empty=
-            document.createElement("div");
-
-        empty.className="day empty";
-
-        container.appendChild(empty);
-
-    }
-
-
-    const today=
-        todayISO();
-
-
-    for(let d=1;d<=daysInMonth;d++){
-
-        const dateString=
-            `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-
-
-        const cell=
-            document.createElement("div");
-
-        cell.className="day";
-
-
-        if(dateString===today)
-            cell.classList.add("today");
-
-
-        cell.innerHTML=
-            `<span>${d}</span>`;
-
-
-        const hasEvent=
-            events.some(
-                e=>e.date===dateString
-            );
-
-
-        const hasDiary=
-            diaries.some(
-                d=>d.date===dateString
-            );
-
-
-        if(hasEvent || hasDiary){
-
-            const dot=
-                document.createElement("div");
-
-            dot.className="day-dot";
-
-            cell.appendChild(dot);
-
-        }
-
-
-        cell.onclick=()=>{
-
-            showToast(
-                formatDate(dateString)
-                +
-                (
-                    hasEvent
-                    ?" • Schedule"
-                    :""
-                )
-                +
-                (
-                    hasDiary
-                    ?" • Diary"
-                    :""
-                )
-            );
-
-        };
-
-
-        container.appendChild(cell);
-
-    }
-
-}
-
-
-/* =========================================================
-   COLLAGE
-========================================================= */
-
-function renderCollage(){
-
-    const canvas=
-        document.getElementById("collageCanvas");
-
-    if(!canvas.innerHTML){
-
-        canvas.style.background="#fffaf0";
-
-    }
-
-}
-
-
-function selectObject(obj){
-
-    if(selectedObject)
-        selectedObject.classList.remove(
-            "selected-object"
-        );
-
-
-    selectedObject=obj;
-
-
-    if(obj){
-
-        obj.classList.add(
-            "selected-object"
-        );
-
-        document.getElementById(
-            "selectionInfo"
-        ).textContent=
-            "Selected: "
-            +
-            (
-                obj.dataset.type
-                ||"object"
-            );
-
-    }
-
-}
-
-
-function makeDraggable(obj){
-
-    let dragging=false;
-
-    let offsetX=0;
-
-    let offsetY=0;
-
-
-    obj.addEventListener(
-        "pointerdown",
-        e=>{
-
-            dragging=true;
-
-            selectObject(obj);
-
-            const rect=
-                obj.getBoundingClientRect();
-
-            offsetX=
-                e.clientX-rect.left;
-
-            offsetY=
-                e.clientY-rect.top;
-
-            obj.setPointerCapture(
-                e.pointerId
-            );
-
-        }
-    );
-
-
-    obj.addEventListener(
-        "pointermove",
-        e=>{
-
-            if(!dragging)
-                return;
-
-
-            const canvas=
-                document.getElementById(
-                    "collageCanvas"
-                );
-
-            const rect=
-                canvas.getBoundingClientRect();
-
-
-            let x=
-                e.clientX
-                -
-                rect.left
-                -
-                offsetX;
-
-            let y=
-                e.clientY
-                -
-                rect.top
-                -
-                offsetY;
-
-
-            x=Math.max(
-                0,
-                Math.min(
-                    x,
-                    canvas.clientWidth
-                    -
-                    obj.offsetWidth
-                )
-            );
-
-
-            y=Math.max(
-                0,
-                Math.min(
-                    y,
-                    canvas.clientHeight
-                    -
-                    obj.offsetHeight
-                )
-            );
-
-
-            obj.style.left=x+"px";
-
-            obj.style.top=y+"px";
-
-        }
-    );
-
-
-    obj.addEventListener(
-        "pointerup",
-        ()=>{
-            dragging=false;
-        }
-    );
-
-}
-
-
-function addSticker(emoji){
-
-    const canvas=
-        document.getElementById(
-            "collageCanvas"
-        );
-
-
-    const obj=
-        document.createElement("div");
-
-
-    obj.className=
-        "collage-object collage-sticker";
-
-
-    obj.dataset.type="sticker";
-
-
-    obj.textContent=emoji;
-
-
-    obj.style.left=
-        (100+Math.random()*350)+"px";
-
-    obj.style.top=
-        (100+Math.random()*350)+"px";
-
-
-    canvas.appendChild(obj);
-
-    makeDraggable(obj);
-
-    selectObject(obj);
-
-}
-
-
-function addText(){
-
-    const text=
-        prompt(
-            "Write your text:"
-        );
-
-
-    if(!text)
-        return;
-
-
-    const canvas=
-        document.getElementById(
-            "collageCanvas"
-        );
-
-
-    const obj=
-        document.createElement("div");
-
-
-    obj.className=
-        "collage-object collage-text";
-
-
-    obj.dataset.type="text";
-
-
-    obj.textContent=text;
-
-
-    obj.style.left="200px";
-
-    obj.style.top="250px";
-
-
-    canvas.appendChild(obj);
-
-    makeDraggable(obj);
-
-    selectObject(obj);
-
-}
-
-
-function uploadCollagePhotos(event){
-
-    const files=
-        [...event.target.files];
-
-
-    files.forEach(
-        (file,index)=>{
-
-            const reader=
-                new FileReader();
-
-
-            reader.onload=function(e){
-
-                createCollagePhoto(
-                    e.target.result,
-                    index
-                );
-
-            };
-
-
-            reader.readAsDataURL(file);
-
-        }
-    );
-
-
-    event.target.value="";
-
-}
-
-
-function createCollagePhoto(src,index){
-
-    const canvas=
-        document.getElementById(
-            "collageCanvas"
-        );
-
-
-    const img=
-        document.createElement("img");
-
-
-    img.src=src;
-
-
-    img.className=
-        "collage-object collage-photo";
-
-
-    img.dataset.type="photo";
-
-
-    img.style.left=
-        (50+index*30)+"px";
-
-    img.style.top=
-        (50+index*30)+"px";
-
-
-    canvas.appendChild(img);
-
-
-    makeDraggable(img);
-
-    selectObject(img);
-
-}
-
-
-function resizeSelected(amount){
-
-    if(!selectedObject)
-        return;
-
-
-    if(
-        selectedObject.classList
-            .contains("collage-sticker")
-    ){
-
-        const current=
-            parseFloat(
-                getComputedStyle(
-                    selectedObject
-                ).fontSize
-            );
-
-        selectedObject.style.fontSize=
-            Math.max(
-                15,
-                current+amount
-            )+"px";
-
-        return;
-
-    }
-
-
-    if(
-        selectedObject.classList
-            .contains("collage-photo")
-    ){
-
-        const width=
-            selectedObject.offsetWidth
-            +amount;
-
-        selectedObject.style.width=
-            Math.max(50,width)+"px";
-
-        selectedObject.style.height=
-            Math.max(50,width)+"px";
-
-    }
-
-}
-
-
-function rotateSelected(deg){
-
-    if(!selectedObject)
-        return;
-
-
-    let rotation=
-        parseFloat(
-            selectedObject.dataset.rotation
-            ||"0"
-        );
-
-
-    rotation+=deg;
-
-
-    selectedObject.dataset.rotation=
-        rotation;
-
-
-    selectedObject.style.transform=
-        `rotate(${rotation}deg)`;
-
-}
-
-
-function deleteSelected(){
-
-    if(!selectedObject)
-        return;
-
-
-    selectedObject.remove();
-
-    selectedObject=null;
-
-    document.getElementById(
-        "selectionInfo"
-    ).textContent=
-        "Select an object.";
-
-}
-
-
-function moveLayer(direction){
-
-    if(!selectedObject)
-        return;
-
-
-    const canvas=
-        document.getElementById(
-            "collageCanvas"
-        );
-
-
-    if(direction>0)
-        canvas.appendChild(
-            selectedObject
-        );
-
-    else
-        canvas.insertBefore(
-            selectedObject,
-            canvas.firstChild
-        );
-
-}
-
-
-function setCanvasBackground(color){
-
-    document.getElementById(
-        "collageCanvas"
-    ).style.background=color;
-
-}
-
-
-/* =========================================================
-   COLLAGE TEMPLATES
-========================================================= */
-
-function clearCollage(){
-
-    if(!confirm(
-        "Clear the whole collage?"
-    ))
-        return;
-
-
-    const canvas=
-        document.getElementById(
-            "collageCanvas"
-        );
-
-
-    canvas.innerHTML="";
-
-    selectedObject=null;
-
-    canvas.style.background=
-        "#fffaf0";
-
-}
-
-
-function applyTemplate(type){
-
-    const canvas=
-        document.getElementById(
-            "collageCanvas"
-        );
-
-
-    const photos=
-        [...canvas.querySelectorAll(
-            ".collage-photo"
-        )];
-
-
-    if(!photos.length){
-
-        showToast(
-            "Upload some photos first 📷"
-        );
-
-        return;
-
-    }
-
-
-    photos.forEach(
-        (photo,index)=>{
-
-            photo.classList.remove(
-                "polaroid"
-            );
-
-
-            photo.style.width="180px";
-
-            photo.style.height="180px";
-
-            photo.style.transform=
-                "rotate(0deg)";
-
-
-            if(type===2){
-
-                photo.style.width="270px";
-
-                photo.style.height="270px";
-
-                photo.style.left=
-                    index%2===0
-                    ?"15px"
-                    :"315px";
-
-                photo.style.top="160px";
-
-            }
-
-
-            if(type===3){
-
-                photo.style.width="180px";
-
-                photo.style.height="180px";
-
-                const positions=[
-
-                    ["25px","200px"],
-
-                    ["210px","80px"],
-
-                    ["395px","200px"]
-
-                ];
-
-                if(positions[index]){
-
-                    photo.style.left=
-                        positions[index][0];
-
-                    photo.style.top=
-                        positions[index][1];
-
-                }
-
-            }
-
-
-            if(type===4 || type==="grid"){
-
-                photo.style.width="280px";
-
-                photo.style.height="280px";
-
-
-                const positions=[
-
-                    ["10px","10px"],
-
-                    ["310px","10px"],
-
-                    ["10px","310px"],
-
-                    ["310px","310px"]
-
-                ];
-
-
-                if(positions[index]){
-
-                    photo.style.left=
-                        positions[index][0];
-
-                    photo.style.top=
-                        positions[index][1];
-
-                }
-
-            }
-
-
-            if(type==="polaroid"){
-
-                photo.classList.add(
-                    "polaroid"
-                );
-
-                photo.style.width="190px";
-
-                photo.style.height="210px";
-
-
-                photo.style.left=
-                    (40+index*70)+"px";
-
-                photo.style.top=
-                    (150+(index%2)*50)+"px";
-
-
-                photo.style.transform=
-                    `rotate(${
-                        index%2===0
-                        ?-6
-                        :6
-                    }deg)`;
-
-            }
-
-
-            if(type==="free"){
-
-                photo.style.width="160px";
-
-                photo.style.height="160px";
-
-                photo.style.left=
-                    (50+index*45)+"px";
-
-                photo.style.top=
-                    (70+index*50)+"px";
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   EXPORT COLLAGE TO PNG
-========================================================= */
-
-async function exportCollage(){
-
-    const canvas=
-        document.getElementById(
-            "collageCanvas"
-        );
-
-
-    /*
-       We create a real PNG using an offscreen canvas.
-       Images are loaded first so the result contains
-       the actual photos.
-    */
-
-
-    const out=
-        document.createElement("canvas");
-
-
-    const scale=2;
-
-
-    out.width=
-        canvas.clientWidth*scale;
-
-    out.height=
-        canvas.clientHeight*scale;
-
-
-    const ctx=
-        out.getContext("2d");
-
-
-    ctx.scale(scale,scale);
-
-
-    const bg=
-        getComputedStyle(
-            canvas
-        ).backgroundColor;
-
-
-    ctx.fillStyle=
-        bg==="rgba(0, 0, 0, 0)"
-        ?"rgb(255,250,240)"
-        :bg;
-
+    ctx.fillStyle = "#fffdf8";
 
     ctx.fillRect(
         0,
         0,
-        canvas.clientWidth,
-        canvas.clientHeight
+        canvas.width,
+        canvas.height
     );
 
 
-    const objects=
-        [...canvas.children];
-
-
-    for(const obj of objects){
-
-        const rect=
-            obj.getBoundingClientRect();
-
-        const canvasRect=
-            canvas.getBoundingClientRect();
-
-
-        const x=
-            rect.left-canvasRect.left;
-
-        const y=
-            rect.top-canvasRect.top;
-
+    objects.forEach(obj=>{
 
         ctx.save();
 
-
-        const rotation=
-            parseFloat(
-                obj.dataset.rotation
-                ||"0"
-            )
-            *
-            Math.PI
-            /
-            180;
-
-
-        const centerX=
-            x+rect.width/2;
-
-        const centerY=
-            y+rect.height/2;
-
-
         ctx.translate(
-            centerX,
-            centerY
+            obj.x,
+            obj.y
+        );
+
+        ctx.rotate(
+            obj.rotation || 0
         );
 
 
-        ctx.rotate(rotation);
+        if(obj.type==="image"){
 
-
-        const w=
-            rect.width;
-
-        const h=
-            rect.height;
-
-
-        if(
-            obj.tagName==="IMG"
-        ){
-
-            try{
-
-                await drawImage(
-                    ctx,
-                    obj.src,
-                    -w/2,
-                    -h/2,
-                    w,
-                    h
-                );
-
-            }
-            catch(err){
-
-                console.log(err);
-
-            }
+            ctx.drawImage(
+                obj.image,
+                -obj.width/2,
+                -obj.height/2,
+                obj.width,
+                obj.height
+            );
 
         }
 
-        else{
 
-            const style=
-                getComputedStyle(obj);
+        if(obj.type==="text"){
 
+            ctx.font =
+                `${obj.size}px Georgia`;
 
-            ctx.font=
-                `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+            ctx.fillStyle =
+                obj.color || "#403847";
 
-            ctx.fillStyle=
-                style.color
-                ||
-                "#3f3a35";
+            ctx.textAlign = "center";
 
-
-            ctx.textAlign="center";
-
-            ctx.textBaseline="middle";
-
+            ctx.textBaseline = "middle";
 
             ctx.fillText(
-                obj.textContent,
+                obj.text,
                 0,
                 0
             );
@@ -3917,229 +2073,862 @@ async function exportCollage(){
         }
 
 
+        if(obj.type==="emoji"){
+
+            ctx.font =
+                `${obj.size}px Arial`;
+
+            ctx.textAlign = "center";
+
+            ctx.textBaseline = "middle";
+
+            ctx.fillText(
+                obj.text,
+                0,
+                0
+            );
+
+        }
+
+
+        if(obj.type==="sticker"){
+
+            ctx.font =
+                `${obj.size}px Arial`;
+
+            ctx.textAlign = "center";
+
+            ctx.textBaseline = "middle";
+
+            ctx.fillText(
+                obj.text,
+                0,
+                0
+            );
+
+        }
+
+
+        if(obj===selectedObject){
+
+            let w =
+                obj.width ||
+                obj.size ||
+                40;
+
+            let h =
+                obj.height ||
+                obj.size ||
+                40;
+
+            ctx.strokeStyle =
+                "#8b6f9e";
+
+            ctx.lineWidth = 3;
+
+            ctx.setLineDash([6,4]);
+
+            ctx.strokeRect(
+                -w/2-5,
+                -h/2-5,
+                w+10,
+                h+10
+            );
+
+            ctx.setLineDash([]);
+
+        }
+
         ctx.restore();
 
-    }
-
-
-    const link=
-        document.createElement("a");
-
-
-    link.download=
-        "my-life-book-collage.png";
-
-
-    link.href=
-        out.toDataURL("image/png");
-
-
-    link.click();
-
-
-    showToast(
-        "Collage exported as PNG 🎨"
-    );
+    });
 
 }
 
 
-function drawImage(
-    ctx,
-    src,
-    x,
-    y,
-    w,
-    h
-){
+function addObject(obj){
 
-    return new Promise(
-        (resolve,reject)=>{
+    objects.push(obj);
 
-            const img=
-                new Image();
+    selectedObject = obj;
 
-            img.onload=()=>{
+    drawCanvas();
 
-                ctx.drawImage(
-                    img,
-                    x,
-                    y,
-                    w,
-                    h
-                );
+}
 
-                resolve();
+
+/* Image upload */
+
+$("collageImageInput")
+.addEventListener("change",e=>{
+
+    [...e.target.files].forEach(file=>{
+
+        const reader = new FileReader();
+
+        reader.onload = event=>{
+
+            const img = new Image();
+
+            img.onload = ()=>{
+
+                const scale =
+                    Math.min(
+                        220/img.width,
+                        220/img.height,
+                        1
+                    );
+
+                addObject({
+
+                    type:"image",
+
+                    image:img,
+
+                    x:300,
+
+                    y:300,
+
+                    width:img.width*scale,
+
+                    height:img.height*scale,
+
+                    rotation:0
+
+                });
 
             };
 
-            img.onerror=reject;
+            img.src =
+                event.target.result;
 
-            img.src=src;
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
+});
+
+
+/* Text */
+
+$("addText").addEventListener("click",()=>{
+
+    const text =
+        prompt(
+            "Masukkan tulisan:"
+        );
+
+    if(!text) return;
+
+    addObject({
+
+        type:"text",
+
+        text,
+
+        x:300,
+
+        y:300,
+
+        size:35,
+
+        rotation:0
+
+    });
+
+});
+
+
+/* Emoji */
+
+$("addEmoji").addEventListener("click",()=>{
+
+    const emoji =
+        prompt(
+            "Masukkan emoji 😊 ✨ 🌸 💜 📸"
+        ) || "😊";
+
+    addObject({
+
+        type:"emoji",
+
+        text:emoji,
+
+        x:300,
+
+        y:300,
+
+        size:60,
+
+        rotation:0
+
+    });
+
+});
+
+
+/* Sticker */
+
+$("addSticker").addEventListener("click",()=>{
+
+    const stickers =
+        ["⭐","🌸","💜","✨","🎀","☁️","🌙"];
+
+    const sticker =
+        stickers[
+            Math.floor(
+                Math.random()*stickers.length
+            )
+        ];
+
+    addObject({
+
+        type:"sticker",
+
+        text:sticker,
+
+        x:300,
+
+        y:300,
+
+        size:60,
+
+        rotation:0
+
+    });
+
+});
+
+
+/* Mouse drag */
+
+canvas.addEventListener(
+    "mousedown",
+    e=>{
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        const scaleX =
+            canvas.width/rect.width;
+
+        const scaleY =
+            canvas.height/rect.height;
+
+        const x =
+            (e.clientX-rect.left)*scaleX;
+
+        const y =
+            (e.clientY-rect.top)*scaleY;
+
+
+        selectedObject = null;
+
+
+        for(
+            let i=objects.length-1;
+            i>=0;
+            i--
+        ){
+
+            const obj = objects[i];
+
+            const w =
+                obj.width ||
+                obj.size ||
+                50;
+
+            const h =
+                obj.height ||
+                obj.size ||
+                50;
+
+
+            if(
+                x>obj.x-w/2 &&
+                x<obj.x+w/2 &&
+                y>obj.y-h/2 &&
+                y<obj.y+h/2
+            ){
+
+                selectedObject = obj;
+
+                dragging = true;
+
+                dragOffsetX =
+                    x-obj.x;
+
+                dragOffsetY =
+                    y-obj.y;
+
+                break;
+
+            }
 
         }
+
+        drawCanvas();
+
+    }
+);
+
+
+canvas.addEventListener(
+    "mousemove",
+    e=>{
+
+        if(
+            !dragging ||
+            !selectedObject
+        ) return;
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        const scaleX =
+            canvas.width/rect.width;
+
+        const scaleY =
+            canvas.height/rect.height;
+
+        const x =
+            (e.clientX-rect.left)*scaleX;
+
+        const y =
+            (e.clientY-rect.top)*scaleY;
+
+
+        selectedObject.x =
+            x-dragOffsetX;
+
+        selectedObject.y =
+            y-dragOffsetY;
+
+        drawCanvas();
+
+    }
+);
+
+
+window.addEventListener(
+    "mouseup",
+    ()=>{
+        dragging=false;
+    }
+);
+
+
+/* Touch drag */
+
+canvas.addEventListener(
+    "touchstart",
+    e=>{
+
+        const touch = e.touches[0];
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        const scaleX =
+            canvas.width/rect.width;
+
+        const scaleY =
+            canvas.height/rect.height;
+
+        const x =
+            (touch.clientX-rect.left)*scaleX;
+
+        const y =
+            (touch.clientY-rect.top)*scaleY;
+
+
+        for(
+            let i=objects.length-1;
+            i>=0;
+            i--
+        ){
+
+            const obj=objects[i];
+
+            const w =
+                obj.width ||
+                obj.size ||
+                50;
+
+            const h =
+                obj.height ||
+                obj.size ||
+                50;
+
+
+            if(
+                x>obj.x-w/2 &&
+                x<obj.x+w/2 &&
+                y>obj.y-h/2 &&
+                y<obj.y+h/2
+            ){
+
+                selectedObject=obj;
+
+                dragging=true;
+
+                dragOffsetX=x-obj.x;
+
+                dragOffsetY=y-obj.y;
+
+                break;
+
+            }
+
+        }
+
+        drawCanvas();
+
+    },
+    {passive:true}
+);
+
+
+canvas.addEventListener(
+    "touchmove",
+    e=>{
+
+        if(
+            !dragging ||
+            !selectedObject
+        ) return;
+
+        const touch=e.touches[0];
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        const scaleX =
+            canvas.width/rect.width;
+
+        const scaleY =
+            canvas.height/rect.height;
+
+        selectedObject.x =
+            (touch.clientX-rect.left)*scaleX
+            -dragOffsetX;
+
+        selectedObject.y =
+            (touch.clientY-rect.top)*scaleY
+            -dragOffsetY;
+
+        drawCanvas();
+
+    },
+    {passive:true}
+);
+
+
+window.addEventListener(
+    "touchend",
+    ()=>{
+        dragging=false;
+    }
+);
+
+
+/* Rotate */
+
+$("rotateLeft").addEventListener("click",()=>{
+
+    if(!selectedObject){
+
+        showToast("Pilih objek dulu.");
+
+        return;
+    }
+
+    selectedObject.rotation =
+        (selectedObject.rotation || 0)
+        - Math.PI/12;
+
+    drawCanvas();
+
+});
+
+
+$("rotateRight").addEventListener("click",()=>{
+
+    if(!selectedObject){
+
+        showToast("Pilih objek dulu.");
+
+        return;
+    }
+
+    selectedObject.rotation =
+        (selectedObject.rotation || 0)
+        + Math.PI/12;
+
+    drawCanvas();
+
+});
+
+
+/* Resize */
+
+$("resizeUp").addEventListener("click",()=>{
+
+    if(!selectedObject) return;
+
+    if(selectedObject.type==="image"){
+
+        selectedObject.width*=1.1;
+        selectedObject.height*=1.1;
+
+    }else{
+
+        selectedObject.size*=1.1;
+
+    }
+
+    drawCanvas();
+
+});
+
+
+$("resizeDown").addEventListener("click",()=>{
+
+    if(!selectedObject) return;
+
+    if(selectedObject.type==="image"){
+
+        selectedObject.width*=.9;
+        selectedObject.height*=.9;
+
+    }else{
+
+        selectedObject.size*=.9;
+
+    }
+
+    drawCanvas();
+
+});
+
+
+/* Delete */
+
+$("deleteObject").addEventListener("click",()=>{
+
+    if(!selectedObject){
+
+        showToast("Pilih objek dulu.");
+
+        return;
+    }
+
+    objects =
+        objects.filter(
+            obj=>obj!==selectedObject
+        );
+
+    selectedObject=null;
+
+    drawCanvas();
+
+});
+
+
+/* Clear */
+
+$("clearCanvas").addEventListener("click",()=>{
+
+    if(
+        confirm("Hapus semua isi collage?")
+    ){
+
+        objects=[];
+
+        selectedObject=null;
+
+        drawCanvas();
+
+    }
+
+});
+
+
+/* =====================================================
+   COLLAGE TEMPLATES
+===================================================== */
+
+document.querySelectorAll(
+    ".template-btn"
+).forEach(btn=>{
+
+    btn.addEventListener("click",()=>{
+
+        const type =
+            btn.dataset.template;
+
+        objects=[];
+
+        selectedObject=null;
+
+
+        if(type==="2"){
+
+            addPlaceholder(150,300,260,500);
+
+            addPlaceholder(450,300,260,500);
+
+        }
+
+
+        if(type==="3"){
+
+            addPlaceholder(150,300,260,500);
+
+            addPlaceholder(450,170,260,240);
+
+            addPlaceholder(450,430,260,240);
+
+        }
+
+
+        if(type==="4"){
+
+            addPlaceholder(150,170,260,240);
+
+            addPlaceholder(450,170,260,240);
+
+            addPlaceholder(150,430,260,240);
+
+            addPlaceholder(450,430,260,240);
+
+        }
+
+
+        if(type==="polaroid"){
+
+            addPlaceholder(
+                300,
+                300,
+                400,
+                400
+            );
+
+        }
+
+        drawCanvas();
+
+    });
+
+});
+
+
+function addPlaceholder(
+    x,
+    y,
+    width,
+    height
+){
+
+    ctx.save();
+
+    ctx.translate(x,y);
+
+    ctx.fillStyle="#eee7ee";
+
+    ctx.fillRect(
+        -width/2,
+        -height/2,
+        width,
+        height
     );
+
+    ctx.fillStyle="#a99baa";
+
+    ctx.font="22px Georgia";
+
+    ctx.textAlign="center";
+
+    ctx.textBaseline="middle";
+
+    ctx.fillText(
+        "DROP PHOTO",
+        0,
+        0
+    );
+
+    ctx.restore();
 
 }
 
 
-/* =========================================================
+/* Export PNG */
+
+$("exportCollage").addEventListener(
+    "click",
+    ()=>{
+
+        selectedObject=null;
+
+        drawCanvas();
+
+        const link =
+            document.createElement("a");
+
+        link.download =
+            "my-life-book-collage.png";
+
+        link.href =
+            canvas.toDataURL("image/png");
+
+        link.click();
+
+        showToast(
+            "Collage berhasil diexport! 🎨"
+        );
+
+    }
+);
+
+
+drawCanvas();
+
+
+/* =====================================================
    THEMES
-========================================================= */
+===================================================== */
 
-const themes={
-
-    classic:{
-        bg:"#f4efe7",
-        paper:"#fffdf7",
-        paper2:"#faf5eb",
-        text:"#3f3a35",
-        muted:"#8d847a",
-        accent:"#8b6f5a",
-        accent2:"#d9c4ad",
-        border:"#ded3c6"
-    },
-
-    ocean:{
-        bg:"#e8f3f4",
-        paper:"#fbffff",
-        paper2:"#edf8f8",
-        text:"#34464a",
-        muted:"#799196",
-        accent:"#5d8992",
-        accent2:"#c6e0e2",
-        border:"#cbdedf"
-    },
+const themes = {
 
     lavender:{
-        bg:"#f4eef8",
-        paper:"#fffaff",
-        paper2:"#f8f1fb",
-        text:"#4b4052",
-        muted:"#91849b",
-        accent:"#8c729a",
-        accent2:"#ddcde4",
-        border:"#dfd1e4"
+        primary:"#8b6f9e",
+        secondary:"#d8c5e8",
+        light:"#f8f3fb",
+        paper:"#fffdf8",
+        text:"#403847"
     },
 
-    sage:{
-        bg:"#edf3e9",
-        paper:"#fcfff9",
-        paper2:"#f3f8ef",
-        text:"#3f493b",
-        muted:"#83907d",
-        accent:"#70886a",
-        accent2:"#cbdac5",
-        border:"#d5dfd0"
+    blue:{
+        primary:"#5c7ea3",
+        secondary:"#c9dbea",
+        light:"#f1f6fa",
+        paper:"#fffefa",
+        text:"#354454"
     },
 
-    rose:{
-        bg:"#f8eeee",
-        paper:"#fffafa",
-        paper2:"#fff3f3",
-        text:"#4d3e42",
-        muted:"#99868b",
-        accent:"#a87580",
-        accent2:"#e6c8ce",
-        border:"#e3d1d5"
+    green:{
+        primary:"#668b6d",
+        secondary:"#cfe1d1",
+        light:"#f2f7f2",
+        paper:"#fffef8",
+        text:"#39463b"
     },
 
-    night:{
-        bg:"#242220",
-        paper:"#302e2b",
-        paper2:"#393632",
-        text:"#eee8df",
-        muted:"#aaa198",
-        accent:"#b99a78",
-        accent2:"#5a4d40",
-        border:"#514b45"
+    cream:{
+        primary:"#987b55",
+        secondary:"#e7d7b9",
+        light:"#f8f1e4",
+        paper:"#fffdf5",
+        text:"#4c4337"
+    },
+
+    pink:{
+        primary:"#ad7185",
+        secondary:"#eccbd6",
+        light:"#fbf0f4",
+        paper:"#fffdfb",
+        text:"#4c3c42"
     }
 
 };
 
 
-function setTheme(name){
+function applyTheme(name){
 
-    const theme=themes[name];
+    const theme =
+        themes[name];
 
-    if(!theme)
-        return;
+    if(!theme) return;
 
+    const root =
+        document.documentElement;
 
     Object.entries(theme)
-        .forEach(
-            ([key,value])=>{
+        .forEach(([key,value])=>{
 
-                document.documentElement
-                    .style.setProperty(
-                        "--"+key,
-                        value
-                    );
+            root.style.setProperty(
+                "--"+key,
+                value
+            );
 
-            }
-        );
-
+        });
 
     localStorage.setItem(
-        "mlb_theme",
+        "myLifeTheme",
         name
     );
 
+    document.querySelectorAll(
+        ".theme-card"
+    ).forEach(card=>{
 
-    showToast(
-        "Theme changed ✨"
-    );
+        card.classList.toggle(
+            "selected",
+            card.dataset.theme===name
+        );
 
-}
-
-
-function loadTheme(){
-
-    const theme=
-        localStorage.getItem(
-            "mlb_theme"
-        )
-        ||
-        "classic";
-
-
-    setTheme(theme);
+    });
 
 }
 
 
-/* =========================================================
-   RENDER ALL
-========================================================= */
+document.querySelectorAll(
+    ".theme-card"
+).forEach(card=>{
 
-function renderAll(){
+    card.addEventListener("click",()=>{
 
-    renderHome();
+        applyTheme(
+            card.dataset.theme
+        );
 
-    renderDiary();
+        showToast(
+            "Theme berhasil diterapkan ✨"
+        );
 
-    renderEvents();
+    });
 
-    renderTasks();
-
-    renderMemories();
-
-    renderCalendar();
-
-    renderCollage();
-
-}
+});
 
 
-/* =========================================================
-   START
-========================================================= */
+const savedTheme =
+    localStorage.getItem(
+        "myLifeTheme"
+    ) || "lavender";
 
-loadTheme();
+applyTheme(savedTheme);
 
-renderAll();
+
+/* Theme shortcut */
+
+$("themeBtn").addEventListener("click",()=>{
+
+    document.querySelector(
+        '[data-page="themes"]'
+    ).click();
+
+});
+
+
+/* Calendar initial render */
+
+renderCalendar();
+
 
 </script>
 
 </body>
 </html>
+```
