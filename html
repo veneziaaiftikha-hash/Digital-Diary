@@ -1,0 +1,4145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Life Book 📖</title>
+
+<style>
+/* =========================================================
+   MY LIFE BOOK
+   ========================================================= */
+
+:root{
+    --bg:#f4efe7;
+    --paper:#fffdf7;
+    --paper2:#faf5eb;
+    --text:#3f3a35;
+    --muted:#8d847a;
+    --accent:#8b6f5a;
+    --accent2:#d9c4ad;
+    --border:#ded3c6;
+    --shadow:0 15px 45px rgba(65,50,35,.15);
+    --radius:18px;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Georgia,"Times New Roman",serif;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(255,255,255,.7),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* =========================================================
+   BOOK INTRO
+   ========================================================= */
+
+.book-intro{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#e9dfd2;
+    perspective:1500px;
+    transition:opacity .8s,visibility .8s;
+}
+
+.book-intro.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.book-cover{
+    width:min(420px,85vw);
+    height:min(560px,78vh);
+    border-radius:8px 18px 18px 8px;
+    background:
+        linear-gradient(135deg,
+        rgba(255,255,255,.16),
+        transparent 40%),
+        var(--accent);
+    color:white;
+    box-shadow:
+        20px 25px 50px rgba(0,0,0,.28),
+        inset -10px 0 rgba(0,0,0,.08);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    transform:rotateY(-8deg);
+    position:relative;
+    overflow:hidden;
+}
+
+.book-cover:before{
+    content:"";
+    position:absolute;
+    inset:18px;
+    border:2px solid rgba(255,255,255,.55);
+    border-radius:5px 12px 12px 5px;
+}
+
+.book-cover small{
+    letter-spacing:5px;
+    opacity:.8;
+}
+
+.book-cover h1{
+    font-size:clamp(42px,8vw,72px);
+    margin:20px 0 8px;
+    font-weight:normal;
+}
+
+.book-cover p{
+    font-style:italic;
+    opacity:.85;
+}
+
+.open-book-btn{
+    margin-top:50px;
+    border:1px solid rgba(255,255,255,.6);
+    background:rgba(255,255,255,.13);
+    color:white;
+    padding:13px 28px;
+    border-radius:30px;
+    transition:.25s;
+}
+
+.open-book-btn:hover{
+    background:white;
+    color:var(--accent);
+}
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+.app{
+    min-height:100vh;
+    display:none;
+}
+
+.app.show{
+    display:block;
+}
+
+.topbar{
+    height:70px;
+    padding:0 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,253,247,.86);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.brand{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.brand span{
+    font-size:13px;
+    color:var(--muted);
+    display:block;
+    font-weight:normal;
+}
+
+.menu-btn{
+    border:0;
+    background:transparent;
+    font-size:25px;
+}
+
+.layout{
+    display:flex;
+    min-height:calc(100vh - 70px);
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar{
+    width:235px;
+    padding:20px 15px;
+    border-right:1px solid var(--border);
+    background:rgba(255,253,247,.65);
+    transition:.3s;
+}
+
+.nav-item{
+    width:100%;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    padding:12px 14px;
+    margin-bottom:5px;
+    border:0;
+    border-radius:12px;
+    background:transparent;
+    color:var(--text);
+    text-align:left;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:var(--accent2);
+}
+
+.content{
+    flex:1;
+    padding:30px;
+    max-width:1400px;
+    margin:auto;
+    width:100%;
+}
+
+.page{
+    display:none;
+    animation:fadeIn .4s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.page-heading{
+    margin-bottom:25px;
+}
+
+.page-heading h2{
+    font-size:32px;
+    font-weight:normal;
+}
+
+.page-heading p{
+    color:var(--muted);
+    margin-top:5px;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:var(--shadow);
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.stat{
+    font-size:34px;
+    margin:10px 0;
+}
+
+.muted{
+    color:var(--muted);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary{
+    border:0;
+    background:var(--accent);
+    color:white;
+    padding:11px 18px;
+    border-radius:12px;
+}
+
+.secondary{
+    border:1px solid var(--border);
+    background:var(--paper);
+    color:var(--text);
+    padding:10px 15px;
+    border-radius:12px;
+}
+
+.danger{
+    border:0;
+    background:#c87878;
+    color:white;
+    padding:9px 13px;
+    border-radius:10px;
+}
+
+.toolbar{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid var(--border);
+    background:var(--paper);
+    color:var(--text);
+    border-radius:10px;
+    outline:none;
+}
+
+textarea{
+    min-height:180px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--accent);
+}
+
+/* =========================================================
+   DIARY BOOK
+   ========================================================= */
+
+.diary-book{
+    max-width:1000px;
+    margin:auto;
+    perspective:1800px;
+}
+
+.diary-spread{
+    min-height:590px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    background:var(--paper);
+    box-shadow:var(--shadow);
+    border-radius:8px;
+    overflow:hidden;
+    position:relative;
+}
+
+.diary-page{
+    padding:45px;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(130,110,90,.12) 32px
+        ),
+        var(--paper);
+    position:relative;
+}
+
+.diary-page.left{
+    border-right:1px solid var(--border);
+}
+
+.page-number{
+    position:absolute;
+    bottom:15px;
+    left:50%;
+    transform:translateX(-50%);
+    color:var(--muted);
+    font-size:12px;
+}
+
+.diary-date{
+    color:var(--accent);
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.diary-title{
+    font-size:31px;
+    margin-bottom:20px;
+    font-weight:normal;
+}
+
+.diary-writing{
+    white-space:pre-wrap;
+    line-height:32px;
+}
+
+.page-turn-next{
+    animation:turnNext .65s ease;
+}
+
+.page-turn-prev{
+    animation:turnPrev .65s ease;
+}
+
+@keyframes turnNext{
+    0%{
+        transform:rotateY(0);
+        transform-origin:left;
+    }
+    50%{
+        transform:rotateY(-12deg);
+    }
+    100%{
+        transform:rotateY(0);
+    }
+}
+
+@keyframes turnPrev{
+    0%{
+        transform:rotateY(0);
+        transform-origin:right;
+    }
+    50%{
+        transform:rotateY(12deg);
+    }
+    100%{
+        transform:rotateY(0);
+    }
+}
+
+/* =========================================================
+   MEMORY
+   ========================================================= */
+
+.memory-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:20px;
+}
+
+.memory-card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.memory-card img{
+    width:100%;
+    height:190px;
+    object-fit:cover;
+    display:block;
+}
+
+.memory-info{
+    padding:14px;
+}
+
+.memory-info h3{
+    margin-bottom:5px;
+}
+
+.memory-info p{
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+.calendar{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:20px;
+    box-shadow:var(--shadow);
+}
+
+.calendar-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.calendar-head h3{
+    font-size:25px;
+    font-weight:normal;
+}
+
+.calendar-week,
+.calendar-days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+}
+
+.calendar-week div{
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    padding:10px 0;
+}
+
+.day{
+    min-height:75px;
+    border:1px solid rgba(180,160,140,.2);
+    padding:8px;
+    position:relative;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.day:hover{
+    background:var(--paper2);
+}
+
+.day.today{
+    background:var(--accent2);
+    font-weight:bold;
+}
+
+.day.empty{
+    background:rgba(0,0,0,.015);
+    cursor:default;
+}
+
+.day-dot{
+    width:6px;
+    height:6px;
+    background:var(--accent);
+    border-radius:50%;
+    position:absolute;
+    bottom:8px;
+    left:50%;
+}
+
+/* =========================================================
+   SCHEDULE
+   ========================================================= */
+
+.event{
+    padding:15px;
+    border-left:4px solid var(--accent);
+    background:var(--paper);
+    border-radius:10px;
+    margin-bottom:10px;
+    border-top:1px solid var(--border);
+    border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+}
+
+.event-row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.event-time{
+    font-size:14px;
+    color:var(--accent);
+}
+
+/* =========================================================
+   COLLAGE
+   ========================================================= */
+
+.collage-layout{
+    display:grid;
+    grid-template-columns:250px 1fr 250px;
+    gap:15px;
+}
+
+.tool-panel{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:15px;
+    box-shadow:var(--shadow);
+    height:max-content;
+}
+
+.tool-panel h3{
+    margin-bottom:13px;
+}
+
+.tool-btn{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--paper2);
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:7px;
+    text-align:left;
+}
+
+.tool-btn:hover{
+    background:var(--accent2);
+}
+
+.template-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+}
+
+.template-btn{
+    padding:10px 5px;
+    border:1px solid var(--border);
+    background:var(--paper2);
+    border-radius:8px;
+}
+
+.emoji-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:5px;
+}
+
+.emoji-btn{
+    border:1px solid var(--border);
+    background:var(--paper2);
+    border-radius:8px;
+    padding:6px;
+    font-size:21px;
+}
+
+.canvas-wrap{
+    background:#dcd3c7;
+    border-radius:18px;
+    padding:25px;
+    min-height:650px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:auto;
+}
+
+#collageCanvas{
+    width:600px;
+    height:600px;
+    max-width:100%;
+    position:relative;
+    overflow:hidden;
+    background:#fffaf0;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+    background-size:cover;
+}
+
+.collage-object{
+    position:absolute;
+    user-select:none;
+    touch-action:none;
+    cursor:move;
+}
+
+.collage-photo{
+    width:160px;
+    height:160px;
+    object-fit:cover;
+    border:7px solid white;
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+.polaroid{
+    background:white;
+    padding:8px 8px 35px;
+    border:0;
+}
+
+.collage-text{
+    padding:5px;
+    font-size:27px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.collage-sticker{
+    font-size:42px;
+}
+
+.selected-object{
+    outline:2px dashed var(--accent);
+    outline-offset:4px;
+}
+
+.control-row{
+    display:flex;
+    gap:6px;
+    margin-top:8px;
+}
+
+.control-row button{
+    flex:1;
+    padding:8px;
+    border:1px solid var(--border);
+    background:var(--paper2);
+    border-radius:8px;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(40,30,20,.55);
+    z-index:500;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(600px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:var(--paper);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 30px 80px rgba(0,0,0,.3);
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close{
+    border:0;
+    background:transparent;
+    font-size:30px;
+}
+
+/* =========================================================
+   THEME
+   ========================================================= */
+
+.theme-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.theme-card{
+    min-height:100px;
+    border:2px solid var(--border);
+    border-radius:15px;
+    padding:15px;
+    cursor:pointer;
+}
+
+.theme-card:hover{
+    transform:translateY(-2px);
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:var(--text);
+    color:white;
+    padding:13px 18px;
+    border-radius:12px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:.3s;
+    z-index:9999;
+    pointer-events:none;
+}
+
+.toast.show{
+    opacity:1;
+    transform:none;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1000px){
+
+    .collage-layout{
+        grid-template-columns:1fr;
+    }
+
+    .tool-panel{
+        width:100%;
+    }
+
+    .diary-spread{
+        grid-template-columns:1fr;
+    }
+
+    .diary-page.left{
+        border-right:0;
+        border-bottom:1px solid var(--border);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        position:fixed;
+        left:-250px;
+        top:70px;
+        bottom:0;
+        z-index:200;
+    }
+
+    .sidebar.open{
+        left:0;
+    }
+
+    .content{
+        padding:20px 12px;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .calendar{
+        overflow:auto;
+    }
+
+    .day{
+        min-height:55px;
+        font-size:12px;
+    }
+
+    .diary-page{
+        padding:28px;
+    }
+
+    #collageCanvas{
+        width:500px;
+        height:500px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =======================================================
+     BOOK COVER
+======================================================= -->
+
+<div class="book-intro" id="bookIntro">
+
+    <div class="book-cover">
+
+        <small>MY PERSONAL JOURNAL</small>
+
+        <h1>My<br>Life Book</h1>
+
+        <p>little moments, big memories ✦</p>
+
+        <button class="open-book-btn"
+                onclick="openBook()">
+            Open My Book 📖
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     APP
+======================================================= -->
+
+<div class="app" id="app">
+
+<header class="topbar">
+
+    <button class="menu-btn"
+            onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <div class="brand">
+        My Life Book
+        <span>your little corner of life</span>
+    </div>
+
+    <div>
+        <button class="secondary"
+                onclick="showPage('settings')">
+            ⚙️
+        </button>
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+<!-- =======================================================
+     SIDEBAR
+======================================================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <button class="nav-item active"
+            data-page="home"
+            onclick="showPage('home')">
+        🏠 Home
+    </button>
+
+    <button class="nav-item"
+            data-page="diary"
+            onclick="showPage('diary')">
+        📖 Diary
+    </button>
+
+    <button class="nav-item"
+            data-page="schedule"
+            onclick="showPage('schedule')">
+        📅 Schedule
+    </button>
+
+    <button class="nav-item"
+            data-page="tasks"
+            onclick="showPage('tasks')">
+        ✅ Tasks
+    </button>
+
+    <button class="nav-item"
+            data-page="memories"
+            onclick="showPage('memories')">
+        📸 Memories
+    </button>
+
+    <button class="nav-item"
+            data-page="calendar"
+            onclick="showPage('calendar')">
+        🗓️ Calendar
+    </button>
+
+    <button class="nav-item"
+            data-page="collage"
+            onclick="showPage('collage')">
+        🎨 Collage Maker
+    </button>
+
+    <button class="nav-item"
+            data-page="settings"
+            onclick="showPage('settings')">
+        🎨 Themes
+    </button>
+
+</aside>
+
+
+<!-- =======================================================
+     CONTENT
+======================================================= -->
+
+<main class="content">
+
+<!-- HOME -->
+
+<section class="page active" id="home">
+
+    <div class="page-heading">
+
+        <h2>Good day, storyteller ✦</h2>
+
+        <p id="homeDate"></p>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="card">
+
+            <h3>📖 Diary Entries</h3>
+
+            <div class="stat"
+                 id="diaryCount">
+                0
+            </div>
+
+            <p class="muted">
+                little stories you've written
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>📸 Memories</h3>
+
+            <div class="stat"
+                 id="memoryCount">
+                0
+            </div>
+
+            <p class="muted">
+                moments worth keeping
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>✅ Tasks</h3>
+
+            <div class="stat"
+                 id="taskCount">
+                0
+            </div>
+
+            <p class="muted">
+                things on your list
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>⏰ Next Up</h3>
+
+            <div id="nextEvent">
+                No upcoming schedule.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <div class="card">
+
+        <h3>💭 Today's Thought</h3>
+
+        <br>
+
+        <textarea id="quickThought"
+                  placeholder="Write something you're thinking about..."></textarea>
+
+        <br><br>
+
+        <button class="primary"
+                onclick="saveQuickThought()">
+            Save Thought
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     DIARY
+======================================================= -->
+
+<section class="page" id="diary">
+
+    <div class="page-heading">
+
+        <h2>📖 My Diary</h2>
+
+        <p>Turn the pages and keep your stories here.</p>
+
+    </div>
+
+
+    <div class="toolbar">
+
+        <button class="primary"
+                onclick="newDiary()">
+            + New Entry
+        </button>
+
+        <button class="secondary"
+                onclick="previousDiary()">
+            ← Previous
+        </button>
+
+        <button class="secondary"
+                onclick="nextDiary()">
+            Next →
+        </button>
+
+    </div>
+
+
+    <div class="diary-book">
+
+        <div class="diary-spread"
+             id="diarySpread">
+
+            <div class="diary-page left">
+
+                <div class="diary-date"
+                     id="diaryDate">
+                    —
+                </div>
+
+                <h2 class="diary-title"
+                    id="diaryTitle">
+                    Welcome
+                </h2>
+
+                <div class="diary-writing"
+                     id="diaryText">
+                    Your diary pages will appear here.
+                </div>
+
+                <div class="page-number">
+                    <span id="leftPage">1</span>
+                </div>
+
+            </div>
+
+
+            <div class="diary-page">
+
+                <h3>✦ Today's Mood</h3>
+
+                <br>
+
+                <div id="diaryMood"
+                     style="font-size:45px">
+                    ☁️
+                </div>
+
+                <br>
+
+                <p class="muted">
+                    Every day doesn't have to be perfect.
+                    It only needs a page.
+                </p>
+
+                <br><br>
+
+                <button class="secondary"
+                        onclick="editCurrentDiary()">
+                    ✏️ Edit Page
+                </button>
+
+                <button class="danger"
+                        onclick="deleteCurrentDiary()">
+                    Delete
+                </button>
+
+                <div class="page-number">
+                    <span id="rightPage">2</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCHEDULE
+======================================================= -->
+
+<section class="page" id="schedule">
+
+    <div class="page-heading">
+
+        <h2>📅 Schedule</h2>
+
+        <p>Keep track of the things you need to do.</p>
+
+    </div>
+
+
+    <div class="toolbar">
+
+        <button class="primary"
+                onclick="openEventModal()">
+            + Add Event
+        </button>
+
+        <button class="secondary"
+                onclick="enableNotifications()">
+            🔔 Enable Notifications
+        </button>
+
+    </div>
+
+
+    <div id="eventList"></div>
+
+</section>
+
+
+<!-- =======================================================
+     TASKS
+======================================================= -->
+
+<section class="page" id="tasks">
+
+    <div class="page-heading">
+
+        <h2>✅ Tasks</h2>
+
+        <p>Small steps still count.</p>
+
+    </div>
+
+
+    <div class="toolbar">
+
+        <input id="taskInput"
+               placeholder="Add a task..."
+               style="max-width:400px">
+
+        <button class="primary"
+                onclick="addTask()">
+            Add
+        </button>
+
+    </div>
+
+
+    <div id="taskList"></div>
+
+</section>
+
+
+<!-- =======================================================
+     MEMORIES
+======================================================= -->
+
+<section class="page" id="memories">
+
+    <div class="page-heading">
+
+        <h2>📸 Memory Box</h2>
+
+        <p>Keep the moments you never want to forget.</p>
+
+    </div>
+
+
+    <div class="toolbar">
+
+        <label class="primary"
+               style="display:inline-block">
+
+            + Add Photo
+
+            <input type="file"
+                   accept="image/*"
+                   hidden
+                   onchange="addMemory(event)">
+
+        </label>
+
+        <button class="secondary"
+                onclick="showPage('collage')">
+            🎨 Create Collage
+        </button>
+
+    </div>
+
+
+    <div class="memory-grid"
+         id="memoryGrid"></div>
+
+</section>
+
+
+<!-- =======================================================
+     CALENDAR
+======================================================= -->
+
+<section class="page" id="calendar">
+
+    <div class="page-heading">
+
+        <h2>🗓️ Calendar</h2>
+
+        <p>Your life, one beautiful day at a time.</p>
+
+    </div>
+
+
+    <div class="calendar">
+
+        <div class="calendar-head">
+
+            <button class="secondary"
+                    onclick="changeMonth(-1)">
+                ←
+            </button>
+
+            <h3 id="calendarTitle"></h3>
+
+            <button class="secondary"
+                    onclick="changeMonth(1)">
+                →
+            </button>
+
+        </div>
+
+
+        <div class="calendar-week">
+
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+
+        </div>
+
+
+        <div class="calendar-days"
+             id="calendarDays"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     COLLAGE
+======================================================= -->
+
+<section class="page" id="collage">
+
+    <div class="page-heading">
+
+        <h2>🎨 Memory Collage</h2>
+
+        <p>Turn your memories into a scrapbook.</p>
+
+    </div>
+
+
+    <div class="toolbar">
+
+        <button class="primary"
+                onclick="exportCollage()">
+            💾 Export PNG
+        </button>
+
+        <button class="secondary"
+                onclick="clearCollage()">
+            🗑️ Clear
+        </button>
+
+    </div>
+
+
+    <div class="collage-layout">
+
+        <!-- LEFT TOOLS -->
+
+        <div class="tool-panel">
+
+            <h3>📐 Templates</h3>
+
+            <div class="template-grid">
+
+                <button class="template-btn"
+                        onclick="applyTemplate(2)">
+                    2 Photos
+                </button>
+
+                <button class="template-btn"
+                        onclick="applyTemplate(3)">
+                    3 Photos
+                </button>
+
+                <button class="template-btn"
+                        onclick="applyTemplate(4)">
+                    4 Photos
+                </button>
+
+                <button class="template-btn"
+                        onclick="applyTemplate('grid')">
+                    Grid
+                </button>
+
+                <button class="template-btn"
+                        onclick="applyTemplate('polaroid')">
+                    Polaroid
+                </button>
+
+                <button class="template-btn"
+                        onclick="applyTemplate('free')">
+                    Free
+                </button>
+
+            </div>
+
+
+            <br>
+
+            <h3>📷 Photos</h3>
+
+            <label class="tool-btn">
+
+                + Upload Photo
+
+                <input type="file"
+                       accept="image/*"
+                       multiple
+                       hidden
+                       onchange="uploadCollagePhotos(event)">
+
+            </label>
+
+
+            <button class="tool-btn"
+                    onclick="addText()">
+                T Add Text
+            </button>
+
+
+            <br>
+
+            <h3>😊 Stickers</h3>
+
+            <div class="emoji-grid">
+
+                <button class="emoji-btn" onclick="addSticker('✨')">✨</button>
+                <button class="emoji-btn" onclick="addSticker('🌸')">🌸</button>
+                <button class="emoji-btn" onclick="addSticker('🎀')">🎀</button>
+                <button class="emoji-btn" onclick="addSticker('🦋')">🦋</button>
+                <button class="emoji-btn" onclick="addSticker('💕')">💕</button>
+                <button class="emoji-btn" onclick="addSticker('⭐')">⭐</button>
+                <button class="emoji-btn" onclick="addSticker('☁️')">☁️</button>
+                <button class="emoji-btn" onclick="addSticker('🌙')">🌙</button>
+                <button class="emoji-btn" onclick="addSticker('🧸')">🧸</button>
+                <button class="emoji-btn" onclick="addSticker('🍓')">🍓</button>
+                <button class="emoji-btn" onclick="addSticker('🎧')">🎧</button>
+                <button class="emoji-btn" onclick="addSticker('📚')">📚</button>
+
+            </div>
+
+        </div>
+
+
+        <!-- CANVAS -->
+
+        <div class="canvas-wrap">
+
+            <div id="collageCanvas"></div>
+
+        </div>
+
+
+        <!-- EDIT -->
+
+        <div class="tool-panel">
+
+            <h3>✏️ Selected Object</h3>
+
+            <p class="muted"
+               id="selectionInfo">
+                Select an object.
+            </p>
+
+            <div class="control-row">
+
+                <button onclick="resizeSelected(-10)">
+                    −
+                </button>
+
+                <button onclick="resizeSelected(10)">
+                    +
+                </button>
+
+            </div>
+
+
+            <div class="control-row">
+
+                <button onclick="rotateSelected(-15)">
+                    ↶
+                </button>
+
+                <button onclick="rotateSelected(15)">
+                    ↷
+                </button>
+
+            </div>
+
+
+            <div class="control-row">
+
+                <button onclick="moveLayer(-1)">
+                    ↓ Back
+                </button>
+
+                <button onclick="moveLayer(1)">
+                    ↑ Front
+                </button>
+
+            </div>
+
+
+            <br>
+
+
+            <button class="danger"
+                    style="width:100%"
+                    onclick="deleteSelected()">
+                🗑️ Delete Selected
+            </button>
+
+
+            <br><br>
+
+
+            <h3>🎨 Background</h3>
+
+            <div class="emoji-grid">
+
+                <button class="emoji-btn"
+                        style="background:#fffaf0"
+                        onclick="setCanvasBackground('#fffaf0')">
+                </button>
+
+                <button class="emoji-btn"
+                        style="background:#f2e6f7"
+                        onclick="setCanvasBackground('#f2e6f7')">
+                </button>
+
+                <button class="emoji-btn"
+                        style="background:#e8f3ef"
+                        onclick="setCanvasBackground('#e8f3ef')">
+                </button>
+
+                <button class="emoji-btn"
+                        style="background:#e9eef7"
+                        onclick="setCanvasBackground('#e9eef7')">
+                </button>
+
+                <button class="emoji-btn"
+                        style="background:#f8e4e4"
+                        onclick="setCanvasBackground('#f8e4e4')">
+                </button>
+
+                <button class="emoji-btn"
+                        style="background:#e8e0d5"
+                        onclick="setCanvasBackground('#e8e0d5')">
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SETTINGS
+======================================================= -->
+
+<section class="page" id="settings">
+
+    <div class="page-heading">
+
+        <h2>🎨 Theme Customization</h2>
+
+        <p>Make My Life Book feel like your own.</p>
+
+    </div>
+
+
+    <div class="theme-grid">
+
+        <div class="theme-card"
+             style="background:#f4efe7"
+             onclick="setTheme('classic')">
+
+            <h3>🤎 Classic</h3>
+            <p>Warm paper diary</p>
+
+        </div>
+
+
+        <div class="theme-card"
+             style="background:#eaf4f4"
+             onclick="setTheme('ocean')">
+
+            <h3>🩵 Ocean</h3>
+            <p>Soft blue journal</p>
+
+        </div>
+
+
+        <div class="theme-card"
+             style="background:#f7eafa"
+             onclick="setTheme('lavender')">
+
+            <h3>💜 Lavender</h3>
+            <p>Dreamy purple pages</p>
+
+        </div>
+
+
+        <div class="theme-card"
+             style="background:#eef4e8"
+             onclick="setTheme('sage')">
+
+            <h3>🌿 Sage</h3>
+            <p>Calm green diary</p>
+
+        </div>
+
+
+        <div class="theme-card"
+             style="background:#f8e8e8"
+             onclick="setTheme('rose')">
+
+            <h3>🌷 Rose</h3>
+            <p>Soft rosy pages</p>
+
+        </div>
+
+
+        <div class="theme-card"
+             style="background:#282624;color:white"
+             onclick="setTheme('night')">
+
+            <h3>🌙 Night</h3>
+            <p>Cozy dark journal</p>
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <div class="card">
+
+        <h3>🔔 Notifications</h3>
+
+        <p class="muted">
+            Browser reminders for your schedules.
+        </p>
+
+        <br>
+
+        <button class="primary"
+                onclick="enableNotifications()">
+            Enable Notifications
+        </button>
+
+    </div>
+
+</section>
+
+</main>
+
+</div>
+
+</div>
+
+
+<!-- =======================================================
+     DIARY MODAL
+======================================================= -->
+
+<div class="modal"
+     id="diaryModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>📖 Diary Entry</h2>
+
+            <button class="close"
+                    onclick="closeModal('diaryModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Date</label>
+
+            <input type="date"
+                   id="diaryInputDate">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Title</label>
+
+            <input id="diaryInputTitle"
+                   placeholder="Today was...">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Mood</label>
+
+            <select id="diaryInputMood">
+
+                <option>😊</option>
+                <option>🥰</option>
+                <option>😎</option>
+                <option>😌</option>
+                <option>😐</option>
+                <option>😔</option>
+                <option>😭</option>
+                <option>😴</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Your story</label>
+
+            <textarea id="diaryInputText"
+                      placeholder="Write whatever is on your mind..."></textarea>
+
+        </div>
+
+
+        <button class="primary"
+                onclick="saveDiary()">
+            Save Page
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     EVENT MODAL
+======================================================= -->
+
+<div class="modal"
+     id="eventModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>📅 Add Schedule</h2>
+
+            <button class="close"
+                    onclick="closeModal('eventModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Title</label>
+
+            <input id="eventTitle"
+                   placeholder="Study, meeting, project...">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Date</label>
+
+            <input type="date"
+                   id="eventDate">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Time</label>
+
+            <input type="time"
+                   id="eventTime">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Category</label>
+
+            <select id="eventCategory">
+
+                <option>School</option>
+                <option>Personal</option>
+                <option>Study</option>
+                <option>Organization</option>
+                <option>Other</option>
+
+            </select>
+
+        </div>
+
+
+        <button class="primary"
+                onclick="saveEvent()">
+            Save Schedule
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="toast"
+     id="toast">
+</div>
+
+
+<script>
+/* =========================================================
+   DATA
+========================================================= */
+
+let diaries =
+    JSON.parse(localStorage.getItem("mlb_diaries")) || [];
+
+let events =
+    JSON.parse(localStorage.getItem("mlb_events")) || [];
+
+let tasks =
+    JSON.parse(localStorage.getItem("mlb_tasks")) || [];
+
+let memories =
+    JSON.parse(localStorage.getItem("mlb_memories")) || [];
+
+let quickThought =
+    localStorage.getItem("mlb_thought") || "";
+
+let currentDiaryIndex = 0;
+
+let calendarDate = new Date();
+
+let selectedObject = null;
+
+let collageObjects = [];
+
+let notifiedEvents =
+    JSON.parse(localStorage.getItem("mlb_notified")) || [];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function saveAll(){
+
+    localStorage.setItem(
+        "mlb_diaries",
+        JSON.stringify(diaries)
+    );
+
+    localStorage.setItem(
+        "mlb_events",
+        JSON.stringify(events)
+    );
+
+    localStorage.setItem(
+        "mlb_tasks",
+        JSON.stringify(tasks)
+    );
+
+    localStorage.setItem(
+        "mlb_memories",
+        JSON.stringify(memories)
+    );
+
+}
+
+
+function todayISO(){
+
+    return new Date()
+        .toISOString()
+        .split("T")[0];
+
+}
+
+
+function formatDate(date){
+
+    if(!date) return "";
+
+    return new Date(date+"T00:00:00")
+        .toLocaleDateString(
+            "en-US",
+            {
+                day:"numeric",
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+}
+
+
+function escapeHTML(str){
+
+    return String(str || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function showToast(message){
+
+    const toast=
+        document.getElementById("toast");
+
+    toast.textContent=message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+        toast.classList.remove("show");
+    },2800);
+
+}
+
+
+function closeModal(id){
+
+    document
+        .getElementById(id)
+        .classList.remove("show");
+
+}
+
+
+/* =========================================================
+   BOOK OPEN
+========================================================= */
+
+function openBook(){
+
+    document
+        .getElementById("bookIntro")
+        .classList.add("hide");
+
+    document
+        .getElementById("app")
+        .classList.add("show");
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+function showPage(page){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(p=>{
+            p.classList.remove("active");
+        });
+
+    document
+        .getElementById(page)
+        .classList.add("active");
+
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(btn=>{
+            btn.classList.toggle(
+                "active",
+                btn.dataset.page===page
+            );
+        });
+
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+
+    if(page==="calendar")
+        renderCalendar();
+
+    if(page==="collage")
+        renderCollage();
+
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function renderHome(){
+
+    document.getElementById("homeDate")
+        .textContent=
+        new Date().toLocaleDateString(
+            "en-US",
+            {
+                weekday:"long",
+                day:"numeric",
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+
+    document.getElementById("diaryCount")
+        .textContent=diaries.length;
+
+    document.getElementById("memoryCount")
+        .textContent=memories.length;
+
+    document.getElementById("taskCount")
+        .textContent=
+        tasks.filter(t=>!t.done).length;
+
+
+    document.getElementById("quickThought")
+        .value=quickThought;
+
+
+    renderNextEvent();
+
+}
+
+
+function saveQuickThought(){
+
+    quickThought=
+        document.getElementById("quickThought")
+        .value;
+
+    localStorage.setItem(
+        "mlb_thought",
+        quickThought
+    );
+
+    showToast("Thought saved ✦");
+
+}
+
+
+function renderNextEvent(){
+
+    const now=new Date();
+
+    const upcoming=events
+        .map(e=>({
+            ...e,
+            dateTime:new Date(
+                e.date+"T"+e.time
+            )
+        }))
+        .filter(e=>e.dateTime>now)
+        .sort((a,b)=>
+            a.dateTime-b.dateTime
+        );
+
+
+    const box=
+        document.getElementById("nextEvent");
+
+
+    if(!upcoming.length){
+
+        box.innerHTML=
+            `<p class="muted">
+                No upcoming schedule.
+            </p>`;
+
+        return;
+
+    }
+
+
+    const e=upcoming[0];
+
+    const diff=e.dateTime-now;
+
+    const mins=
+        Math.floor(diff/60000);
+
+    let countdown;
+
+    if(mins<60)
+        countdown=`in ${mins} min`;
+
+    else{
+
+        const h=Math.floor(mins/60);
+
+        const m=mins%60;
+
+        countdown=
+            `in ${h}h ${m}m`;
+
+    }
+
+
+    box.innerHTML=`
+
+        <h3>
+            ${escapeHTML(e.title)}
+        </h3>
+
+        <p class="event-time">
+            ${e.date} • ${e.time}
+        </p>
+
+        <br>
+
+        <strong>
+            ⏰ ${countdown}
+        </strong>
+
+    `;
+
+}
+
+
+/* =========================================================
+   DIARY
+========================================================= */
+
+function newDiary(){
+
+    document.getElementById("diaryInputDate")
+        .value=todayISO();
+
+    document.getElementById("diaryInputTitle")
+        .value="";
+
+    document.getElementById("diaryInputText")
+        .value="";
+
+    document.getElementById("diaryInputMood")
+        .value="😊";
+
+    document
+        .getElementById("diaryModal")
+        .classList.add("show");
+
+}
+
+
+function saveDiary(){
+
+    const diary={
+
+        id:Date.now(),
+
+        date:
+            document.getElementById("diaryInputDate").value,
+
+        title:
+            document.getElementById("diaryInputTitle").value
+            ||"Untitled Page",
+
+        mood:
+            document.getElementById("diaryInputMood").value,
+
+        text:
+            document.getElementById("diaryInputText").value
+
+    };
+
+
+    diaries.push(diary);
+
+    diaries.sort((a,b)=>
+        b.date.localeCompare(a.date)
+    );
+
+
+    currentDiaryIndex=0;
+
+    saveAll();
+
+    closeModal("diaryModal");
+
+    renderDiary();
+
+    renderHome();
+
+    showToast("Diary page saved 📖");
+
+}
+
+
+function renderDiary(){
+
+    if(!diaries.length){
+
+        document.getElementById("diaryDate")
+            .textContent="Your first page";
+
+        document.getElementById("diaryTitle")
+            .textContent="Welcome";
+
+        document.getElementById("diaryText")
+            .textContent=
+            "Start writing your first story...";
+
+        document.getElementById("diaryMood")
+            .textContent="☁️";
+
+        return;
+
+    }
+
+
+    const d=diaries[currentDiaryIndex];
+
+    document.getElementById("diaryDate")
+        .textContent=formatDate(d.date);
+
+    document.getElementById("diaryTitle")
+        .textContent=d.title;
+
+    document.getElementById("diaryText")
+        .textContent=d.text;
+
+    document.getElementById("diaryMood")
+        .textContent=d.mood;
+
+    document.getElementById("leftPage")
+        .textContent=currentDiaryIndex*2+1;
+
+    document.getElementById("rightPage")
+        .textContent=currentDiaryIndex*2+2;
+
+}
+
+
+function animateDiary(type){
+
+    const spread=
+        document.getElementById("diarySpread");
+
+    spread.classList.remove(
+        "page-turn-next",
+        "page-turn-prev"
+    );
+
+    void spread.offsetWidth;
+
+    spread.classList.add(
+        type==="next"
+        ?"page-turn-next"
+        :"page-turn-prev"
+    );
+
+}
+
+
+function nextDiary(){
+
+    if(!diaries.length) return;
+
+    if(currentDiaryIndex<
+       diaries.length-1){
+
+        currentDiaryIndex++;
+
+        animateDiary("next");
+
+        setTimeout(renderDiary,100);
+
+    }
+
+}
+
+
+function previousDiary(){
+
+    if(!diaries.length) return;
+
+    if(currentDiaryIndex>0){
+
+        currentDiaryIndex--;
+
+        animateDiary("prev");
+
+        setTimeout(renderDiary,100);
+
+    }
+
+}
+
+
+function editCurrentDiary(){
+
+    if(!diaries.length) return;
+
+    const d=diaries[currentDiaryIndex];
+
+    document.getElementById("diaryInputDate")
+        .value=d.date;
+
+    document.getElementById("diaryInputTitle")
+        .value=d.title;
+
+    document.getElementById("diaryInputMood")
+        .value=d.mood;
+
+    document.getElementById("diaryInputText")
+        .value=d.text;
+
+
+    document
+        .getElementById("diaryModal")
+        .classList.add("show");
+
+
+    const oldSave=saveDiary;
+
+}
+
+
+function deleteCurrentDiary(){
+
+    if(!diaries.length) return;
+
+    if(!confirm("Delete this diary page?"))
+        return;
+
+    diaries.splice(
+        currentDiaryIndex,
+        1
+    );
+
+    currentDiaryIndex=
+        Math.max(
+            0,
+            currentDiaryIndex-1
+        );
+
+    saveAll();
+
+    renderDiary();
+
+    renderHome();
+
+}
+
+
+/* =========================================================
+   SCHEDULE
+========================================================= */
+
+function openEventModal(){
+
+    document.getElementById("eventDate")
+        .value=todayISO();
+
+    document.getElementById("eventTime")
+        .value="12:00";
+
+    document.getElementById("eventTitle")
+        .value="";
+
+
+    document
+        .getElementById("eventModal")
+        .classList.add("show");
+
+}
+
+
+function saveEvent(){
+
+    const event={
+
+        id:Date.now(),
+
+        title:
+            document.getElementById("eventTitle").value
+            ||"Untitled Event",
+
+        date:
+            document.getElementById("eventDate").value,
+
+        time:
+            document.getElementById("eventTime").value,
+
+        category:
+            document.getElementById("eventCategory").value
+
+    };
+
+
+    events.push(event);
+
+    events.sort((a,b)=>
+        (a.date+a.time)
+        .localeCompare(
+            b.date+b.time
+        )
+    );
+
+
+    saveAll();
+
+    closeModal("eventModal");
+
+    renderEvents();
+
+    renderCalendar();
+
+    renderHome();
+
+    showToast("Schedule added 📅");
+
+}
+
+
+function renderEvents(){
+
+    const list=
+        document.getElementById("eventList");
+
+    if(!events.length){
+
+        list.innerHTML=`
+            <div class="card">
+                <p class="muted">
+                    No schedules yet.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML=
+        events.map(e=>`
+
+            <div class="event">
+
+                <div class="event-row">
+
+                    <div>
+
+                        <h3>
+                            ${escapeHTML(e.title)}
+                        </h3>
+
+                        <p class="muted">
+                            ${escapeHTML(e.category)}
+                        </p>
+
+                    </div>
+
+                    <div style="text-align:right">
+
+                        <div class="event-time">
+                            ${e.date}
+                        </div>
+
+                        <strong>
+                            ${e.time}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <button
+                    class="danger"
+                    onclick="deleteEvent(${e.id})">
+                    Delete
+                </button>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function deleteEvent(id){
+
+    events=
+        events.filter(e=>e.id!==id);
+
+    saveAll();
+
+    renderEvents();
+
+    renderCalendar();
+
+    renderHome();
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+async function enableNotifications(){
+
+    if(!("Notification" in window)){
+
+        showToast(
+            "Your browser does not support notifications."
+        );
+
+        return;
+
+    }
+
+
+    const permission=
+        await Notification.requestPermission();
+
+
+    if(permission==="granted"){
+
+        showToast(
+            "Notifications enabled 🔔"
+        );
+
+        new Notification(
+            "My Life Book",
+            {
+                body:
+                    "Your schedule reminders are active ✦"
+            }
+        );
+
+    }
+
+}
+
+
+function checkNotifications(){
+
+    if(!("Notification" in window))
+        return;
+
+    if(Notification.permission!=="granted")
+        return;
+
+
+    const now=new Date();
+
+    const date=
+        now.toISOString().split("T")[0];
+
+    const time=
+        String(now.getHours()).padStart(2,"0")
+        +":"
+        +
+        String(now.getMinutes()).padStart(2,"0");
+
+
+    events.forEach(e=>{
+
+        if(e.date!==date)
+            return;
+
+        if(e.time!==time)
+            return;
+
+
+        const key=
+            e.id+"_"+date+"_"+time;
+
+
+        if(notifiedEvents.includes(key))
+            return;
+
+
+        new Notification(
+            "🔔 My Life Book Reminder",
+            {
+                body:
+                    `${e.title} starts now!`
+            }
+        );
+
+
+        showToast(
+            `🔔 ${e.title} starts now!`
+        );
+
+
+        notifiedEvents.push(key);
+
+
+        localStorage.setItem(
+            "mlb_notified",
+            JSON.stringify(notifiedEvents)
+        );
+
+    });
+
+}
+
+
+setInterval(
+    checkNotifications,
+    15000
+);
+
+
+/* =========================================================
+   TASKS
+========================================================= */
+
+function addTask(){
+
+    const input=
+        document.getElementById("taskInput");
+
+    const text=input.value.trim();
+
+    if(!text) return;
+
+
+    tasks.push({
+
+        id:Date.now(),
+
+        text,
+
+        done:false
+
+    });
+
+
+    input.value="";
+
+    saveAll();
+
+    renderTasks();
+
+    renderHome();
+
+}
+
+
+function renderTasks(){
+
+    const list=
+        document.getElementById("taskList");
+
+
+    if(!tasks.length){
+
+        list.innerHTML=`
+            <div class="card">
+                <p class="muted">
+                    Your task list is empty ✦
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML=
+        tasks.map(t=>`
+
+            <div class="card"
+                 style="margin-bottom:10px">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:10px;
+                ">
+
+                    <label style="
+                        display:flex;
+                        gap:10px;
+                        align-items:center;
+                    ">
+
+                        <input
+                            type="checkbox"
+                            style="width:auto"
+                            ${t.done?"checked":""}
+                            onchange="toggleTask(${t.id})">
+
+                        <span style="
+                            ${t.done
+                            ?"text-decoration:line-through;color:var(--muted)"
+                            :""}
+                        ">
+                            ${escapeHTML(t.text)}
+                        </span>
+
+                    </label>
+
+
+                    <button
+                        class="danger"
+                        onclick="deleteTask(${t.id})">
+                        ×
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function toggleTask(id){
+
+    const t=
+        tasks.find(t=>t.id===id);
+
+    if(t)
+        t.done=!t.done;
+
+    saveAll();
+
+    renderTasks();
+
+    renderHome();
+
+}
+
+
+function deleteTask(id){
+
+    tasks=
+        tasks.filter(t=>t.id!==id);
+
+    saveAll();
+
+    renderTasks();
+
+    renderHome();
+
+}
+
+
+/* =========================================================
+   MEMORIES
+========================================================= */
+
+function addMemory(event){
+
+    const files=
+        [...event.target.files];
+
+
+    files.forEach(file=>{
+
+        const reader=
+            new FileReader();
+
+
+        reader.onload=function(e){
+
+            memories.unshift({
+
+                id:Date.now()+Math.random(),
+
+                image:e.target.result,
+
+                title:file.name
+                    .replace(/\.[^/.]+$/,""),
+
+                date:todayISO()
+
+            });
+
+
+            saveAll();
+
+            renderMemories();
+
+            renderHome();
+
+            showToast(
+                "Memory added 📸"
+            );
+
+        };
+
+
+        reader.readAsDataURL(file);
+
+    });
+
+
+    event.target.value="";
+
+}
+
+
+function renderMemories(){
+
+    const grid=
+        document.getElementById("memoryGrid");
+
+
+    if(!memories.length){
+
+        grid.innerHTML=`
+            <div class="card">
+                <p class="muted">
+                    No memories yet. Add your first photo ✦
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML=
+        memories.map(m=>`
+
+            <div class="memory-card">
+
+                <img
+                    src="${m.image}"
+                    alt="Memory">
+
+                <div class="memory-info">
+
+                    <h3>
+                        ${escapeHTML(m.title)}
+                    </h3>
+
+                    <p>
+                        ${formatDate(m.date)}
+                    </p>
+
+                    <br>
+
+                    <button
+                        class="danger"
+                        onclick="deleteMemory('${m.id}')">
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function deleteMemory(id){
+
+    memories=
+        memories.filter(
+            m=>String(m.id)!==String(id)
+        );
+
+    saveAll();
+
+    renderMemories();
+
+    renderHome();
+
+}
+
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+function changeMonth(amount){
+
+    calendarDate.setMonth(
+        calendarDate.getMonth()+amount
+    );
+
+    renderCalendar();
+
+}
+
+
+function renderCalendar(){
+
+    const year=
+        calendarDate.getFullYear();
+
+    const month=
+        calendarDate.getMonth();
+
+
+    document.getElementById("calendarTitle")
+        .textContent=
+        new Date(year,month,1)
+        .toLocaleDateString(
+            "en-US",
+            {
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+
+    const firstDay=
+        new Date(year,month,1)
+        .getDay();
+
+    const daysInMonth=
+        new Date(year,month+1,0)
+        .getDate();
+
+
+    const container=
+        document.getElementById("calendarDays");
+
+    container.innerHTML="";
+
+
+    for(let i=0;i<firstDay;i++){
+
+        const empty=
+            document.createElement("div");
+
+        empty.className="day empty";
+
+        container.appendChild(empty);
+
+    }
+
+
+    const today=
+        todayISO();
+
+
+    for(let d=1;d<=daysInMonth;d++){
+
+        const dateString=
+            `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+
+
+        const cell=
+            document.createElement("div");
+
+        cell.className="day";
+
+
+        if(dateString===today)
+            cell.classList.add("today");
+
+
+        cell.innerHTML=
+            `<span>${d}</span>`;
+
+
+        const hasEvent=
+            events.some(
+                e=>e.date===dateString
+            );
+
+
+        const hasDiary=
+            diaries.some(
+                d=>d.date===dateString
+            );
+
+
+        if(hasEvent || hasDiary){
+
+            const dot=
+                document.createElement("div");
+
+            dot.className="day-dot";
+
+            cell.appendChild(dot);
+
+        }
+
+
+        cell.onclick=()=>{
+
+            showToast(
+                formatDate(dateString)
+                +
+                (
+                    hasEvent
+                    ?" • Schedule"
+                    :""
+                )
+                +
+                (
+                    hasDiary
+                    ?" • Diary"
+                    :""
+                )
+            );
+
+        };
+
+
+        container.appendChild(cell);
+
+    }
+
+}
+
+
+/* =========================================================
+   COLLAGE
+========================================================= */
+
+function renderCollage(){
+
+    const canvas=
+        document.getElementById("collageCanvas");
+
+    if(!canvas.innerHTML){
+
+        canvas.style.background="#fffaf0";
+
+    }
+
+}
+
+
+function selectObject(obj){
+
+    if(selectedObject)
+        selectedObject.classList.remove(
+            "selected-object"
+        );
+
+
+    selectedObject=obj;
+
+
+    if(obj){
+
+        obj.classList.add(
+            "selected-object"
+        );
+
+        document.getElementById(
+            "selectionInfo"
+        ).textContent=
+            "Selected: "
+            +
+            (
+                obj.dataset.type
+                ||"object"
+            );
+
+    }
+
+}
+
+
+function makeDraggable(obj){
+
+    let dragging=false;
+
+    let offsetX=0;
+
+    let offsetY=0;
+
+
+    obj.addEventListener(
+        "pointerdown",
+        e=>{
+
+            dragging=true;
+
+            selectObject(obj);
+
+            const rect=
+                obj.getBoundingClientRect();
+
+            offsetX=
+                e.clientX-rect.left;
+
+            offsetY=
+                e.clientY-rect.top;
+
+            obj.setPointerCapture(
+                e.pointerId
+            );
+
+        }
+    );
+
+
+    obj.addEventListener(
+        "pointermove",
+        e=>{
+
+            if(!dragging)
+                return;
+
+
+            const canvas=
+                document.getElementById(
+                    "collageCanvas"
+                );
+
+            const rect=
+                canvas.getBoundingClientRect();
+
+
+            let x=
+                e.clientX
+                -
+                rect.left
+                -
+                offsetX;
+
+            let y=
+                e.clientY
+                -
+                rect.top
+                -
+                offsetY;
+
+
+            x=Math.max(
+                0,
+                Math.min(
+                    x,
+                    canvas.clientWidth
+                    -
+                    obj.offsetWidth
+                )
+            );
+
+
+            y=Math.max(
+                0,
+                Math.min(
+                    y,
+                    canvas.clientHeight
+                    -
+                    obj.offsetHeight
+                )
+            );
+
+
+            obj.style.left=x+"px";
+
+            obj.style.top=y+"px";
+
+        }
+    );
+
+
+    obj.addEventListener(
+        "pointerup",
+        ()=>{
+            dragging=false;
+        }
+    );
+
+}
+
+
+function addSticker(emoji){
+
+    const canvas=
+        document.getElementById(
+            "collageCanvas"
+        );
+
+
+    const obj=
+        document.createElement("div");
+
+
+    obj.className=
+        "collage-object collage-sticker";
+
+
+    obj.dataset.type="sticker";
+
+
+    obj.textContent=emoji;
+
+
+    obj.style.left=
+        (100+Math.random()*350)+"px";
+
+    obj.style.top=
+        (100+Math.random()*350)+"px";
+
+
+    canvas.appendChild(obj);
+
+    makeDraggable(obj);
+
+    selectObject(obj);
+
+}
+
+
+function addText(){
+
+    const text=
+        prompt(
+            "Write your text:"
+        );
+
+
+    if(!text)
+        return;
+
+
+    const canvas=
+        document.getElementById(
+            "collageCanvas"
+        );
+
+
+    const obj=
+        document.createElement("div");
+
+
+    obj.className=
+        "collage-object collage-text";
+
+
+    obj.dataset.type="text";
+
+
+    obj.textContent=text;
+
+
+    obj.style.left="200px";
+
+    obj.style.top="250px";
+
+
+    canvas.appendChild(obj);
+
+    makeDraggable(obj);
+
+    selectObject(obj);
+
+}
+
+
+function uploadCollagePhotos(event){
+
+    const files=
+        [...event.target.files];
+
+
+    files.forEach(
+        (file,index)=>{
+
+            const reader=
+                new FileReader();
+
+
+            reader.onload=function(e){
+
+                createCollagePhoto(
+                    e.target.result,
+                    index
+                );
+
+            };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+    event.target.value="";
+
+}
+
+
+function createCollagePhoto(src,index){
+
+    const canvas=
+        document.getElementById(
+            "collageCanvas"
+        );
+
+
+    const img=
+        document.createElement("img");
+
+
+    img.src=src;
+
+
+    img.className=
+        "collage-object collage-photo";
+
+
+    img.dataset.type="photo";
+
+
+    img.style.left=
+        (50+index*30)+"px";
+
+    img.style.top=
+        (50+index*30)+"px";
+
+
+    canvas.appendChild(img);
+
+
+    makeDraggable(img);
+
+    selectObject(img);
+
+}
+
+
+function resizeSelected(amount){
+
+    if(!selectedObject)
+        return;
+
+
+    if(
+        selectedObject.classList
+            .contains("collage-sticker")
+    ){
+
+        const current=
+            parseFloat(
+                getComputedStyle(
+                    selectedObject
+                ).fontSize
+            );
+
+        selectedObject.style.fontSize=
+            Math.max(
+                15,
+                current+amount
+            )+"px";
+
+        return;
+
+    }
+
+
+    if(
+        selectedObject.classList
+            .contains("collage-photo")
+    ){
+
+        const width=
+            selectedObject.offsetWidth
+            +amount;
+
+        selectedObject.style.width=
+            Math.max(50,width)+"px";
+
+        selectedObject.style.height=
+            Math.max(50,width)+"px";
+
+    }
+
+}
+
+
+function rotateSelected(deg){
+
+    if(!selectedObject)
+        return;
+
+
+    let rotation=
+        parseFloat(
+            selectedObject.dataset.rotation
+            ||"0"
+        );
+
+
+    rotation+=deg;
+
+
+    selectedObject.dataset.rotation=
+        rotation;
+
+
+    selectedObject.style.transform=
+        `rotate(${rotation}deg)`;
+
+}
+
+
+function deleteSelected(){
+
+    if(!selectedObject)
+        return;
+
+
+    selectedObject.remove();
+
+    selectedObject=null;
+
+    document.getElementById(
+        "selectionInfo"
+    ).textContent=
+        "Select an object.";
+
+}
+
+
+function moveLayer(direction){
+
+    if(!selectedObject)
+        return;
+
+
+    const canvas=
+        document.getElementById(
+            "collageCanvas"
+        );
+
+
+    if(direction>0)
+        canvas.appendChild(
+            selectedObject
+        );
+
+    else
+        canvas.insertBefore(
+            selectedObject,
+            canvas.firstChild
+        );
+
+}
+
+
+function setCanvasBackground(color){
+
+    document.getElementById(
+        "collageCanvas"
+    ).style.background=color;
+
+}
+
+
+/* =========================================================
+   COLLAGE TEMPLATES
+========================================================= */
+
+function clearCollage(){
+
+    if(!confirm(
+        "Clear the whole collage?"
+    ))
+        return;
+
+
+    const canvas=
+        document.getElementById(
+            "collageCanvas"
+        );
+
+
+    canvas.innerHTML="";
+
+    selectedObject=null;
+
+    canvas.style.background=
+        "#fffaf0";
+
+}
+
+
+function applyTemplate(type){
+
+    const canvas=
+        document.getElementById(
+            "collageCanvas"
+        );
+
+
+    const photos=
+        [...canvas.querySelectorAll(
+            ".collage-photo"
+        )];
+
+
+    if(!photos.length){
+
+        showToast(
+            "Upload some photos first 📷"
+        );
+
+        return;
+
+    }
+
+
+    photos.forEach(
+        (photo,index)=>{
+
+            photo.classList.remove(
+                "polaroid"
+            );
+
+
+            photo.style.width="180px";
+
+            photo.style.height="180px";
+
+            photo.style.transform=
+                "rotate(0deg)";
+
+
+            if(type===2){
+
+                photo.style.width="270px";
+
+                photo.style.height="270px";
+
+                photo.style.left=
+                    index%2===0
+                    ?"15px"
+                    :"315px";
+
+                photo.style.top="160px";
+
+            }
+
+
+            if(type===3){
+
+                photo.style.width="180px";
+
+                photo.style.height="180px";
+
+                const positions=[
+
+                    ["25px","200px"],
+
+                    ["210px","80px"],
+
+                    ["395px","200px"]
+
+                ];
+
+                if(positions[index]){
+
+                    photo.style.left=
+                        positions[index][0];
+
+                    photo.style.top=
+                        positions[index][1];
+
+                }
+
+            }
+
+
+            if(type===4 || type==="grid"){
+
+                photo.style.width="280px";
+
+                photo.style.height="280px";
+
+
+                const positions=[
+
+                    ["10px","10px"],
+
+                    ["310px","10px"],
+
+                    ["10px","310px"],
+
+                    ["310px","310px"]
+
+                ];
+
+
+                if(positions[index]){
+
+                    photo.style.left=
+                        positions[index][0];
+
+                    photo.style.top=
+                        positions[index][1];
+
+                }
+
+            }
+
+
+            if(type==="polaroid"){
+
+                photo.classList.add(
+                    "polaroid"
+                );
+
+                photo.style.width="190px";
+
+                photo.style.height="210px";
+
+
+                photo.style.left=
+                    (40+index*70)+"px";
+
+                photo.style.top=
+                    (150+(index%2)*50)+"px";
+
+
+                photo.style.transform=
+                    `rotate(${
+                        index%2===0
+                        ?-6
+                        :6
+                    }deg)`;
+
+            }
+
+
+            if(type==="free"){
+
+                photo.style.width="160px";
+
+                photo.style.height="160px";
+
+                photo.style.left=
+                    (50+index*45)+"px";
+
+                photo.style.top=
+                    (70+index*50)+"px";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   EXPORT COLLAGE TO PNG
+========================================================= */
+
+async function exportCollage(){
+
+    const canvas=
+        document.getElementById(
+            "collageCanvas"
+        );
+
+
+    /*
+       We create a real PNG using an offscreen canvas.
+       Images are loaded first so the result contains
+       the actual photos.
+    */
+
+
+    const out=
+        document.createElement("canvas");
+
+
+    const scale=2;
+
+
+    out.width=
+        canvas.clientWidth*scale;
+
+    out.height=
+        canvas.clientHeight*scale;
+
+
+    const ctx=
+        out.getContext("2d");
+
+
+    ctx.scale(scale,scale);
+
+
+    const bg=
+        getComputedStyle(
+            canvas
+        ).backgroundColor;
+
+
+    ctx.fillStyle=
+        bg==="rgba(0, 0, 0, 0)"
+        ?"rgb(255,250,240)"
+        :bg;
+
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.clientWidth,
+        canvas.clientHeight
+    );
+
+
+    const objects=
+        [...canvas.children];
+
+
+    for(const obj of objects){
+
+        const rect=
+            obj.getBoundingClientRect();
+
+        const canvasRect=
+            canvas.getBoundingClientRect();
+
+
+        const x=
+            rect.left-canvasRect.left;
+
+        const y=
+            rect.top-canvasRect.top;
+
+
+        ctx.save();
+
+
+        const rotation=
+            parseFloat(
+                obj.dataset.rotation
+                ||"0"
+            )
+            *
+            Math.PI
+            /
+            180;
+
+
+        const centerX=
+            x+rect.width/2;
+
+        const centerY=
+            y+rect.height/2;
+
+
+        ctx.translate(
+            centerX,
+            centerY
+        );
+
+
+        ctx.rotate(rotation);
+
+
+        const w=
+            rect.width;
+
+        const h=
+            rect.height;
+
+
+        if(
+            obj.tagName==="IMG"
+        ){
+
+            try{
+
+                await drawImage(
+                    ctx,
+                    obj.src,
+                    -w/2,
+                    -h/2,
+                    w,
+                    h
+                );
+
+            }
+            catch(err){
+
+                console.log(err);
+
+            }
+
+        }
+
+        else{
+
+            const style=
+                getComputedStyle(obj);
+
+
+            ctx.font=
+                `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+
+            ctx.fillStyle=
+                style.color
+                ||
+                "#3f3a35";
+
+
+            ctx.textAlign="center";
+
+            ctx.textBaseline="middle";
+
+
+            ctx.fillText(
+                obj.textContent,
+                0,
+                0
+            );
+
+        }
+
+
+        ctx.restore();
+
+    }
+
+
+    const link=
+        document.createElement("a");
+
+
+    link.download=
+        "my-life-book-collage.png";
+
+
+    link.href=
+        out.toDataURL("image/png");
+
+
+    link.click();
+
+
+    showToast(
+        "Collage exported as PNG 🎨"
+    );
+
+}
+
+
+function drawImage(
+    ctx,
+    src,
+    x,
+    y,
+    w,
+    h
+){
+
+    return new Promise(
+        (resolve,reject)=>{
+
+            const img=
+                new Image();
+
+            img.onload=()=>{
+
+                ctx.drawImage(
+                    img,
+                    x,
+                    y,
+                    w,
+                    h
+                );
+
+                resolve();
+
+            };
+
+            img.onerror=reject;
+
+            img.src=src;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   THEMES
+========================================================= */
+
+const themes={
+
+    classic:{
+        bg:"#f4efe7",
+        paper:"#fffdf7",
+        paper2:"#faf5eb",
+        text:"#3f3a35",
+        muted:"#8d847a",
+        accent:"#8b6f5a",
+        accent2:"#d9c4ad",
+        border:"#ded3c6"
+    },
+
+    ocean:{
+        bg:"#e8f3f4",
+        paper:"#fbffff",
+        paper2:"#edf8f8",
+        text:"#34464a",
+        muted:"#799196",
+        accent:"#5d8992",
+        accent2:"#c6e0e2",
+        border:"#cbdedf"
+    },
+
+    lavender:{
+        bg:"#f4eef8",
+        paper:"#fffaff",
+        paper2:"#f8f1fb",
+        text:"#4b4052",
+        muted:"#91849b",
+        accent:"#8c729a",
+        accent2:"#ddcde4",
+        border:"#dfd1e4"
+    },
+
+    sage:{
+        bg:"#edf3e9",
+        paper:"#fcfff9",
+        paper2:"#f3f8ef",
+        text:"#3f493b",
+        muted:"#83907d",
+        accent:"#70886a",
+        accent2:"#cbdac5",
+        border:"#d5dfd0"
+    },
+
+    rose:{
+        bg:"#f8eeee",
+        paper:"#fffafa",
+        paper2:"#fff3f3",
+        text:"#4d3e42",
+        muted:"#99868b",
+        accent:"#a87580",
+        accent2:"#e6c8ce",
+        border:"#e3d1d5"
+    },
+
+    night:{
+        bg:"#242220",
+        paper:"#302e2b",
+        paper2:"#393632",
+        text:"#eee8df",
+        muted:"#aaa198",
+        accent:"#b99a78",
+        accent2:"#5a4d40",
+        border:"#514b45"
+    }
+
+};
+
+
+function setTheme(name){
+
+    const theme=themes[name];
+
+    if(!theme)
+        return;
+
+
+    Object.entries(theme)
+        .forEach(
+            ([key,value])=>{
+
+                document.documentElement
+                    .style.setProperty(
+                        "--"+key,
+                        value
+                    );
+
+            }
+        );
+
+
+    localStorage.setItem(
+        "mlb_theme",
+        name
+    );
+
+
+    showToast(
+        "Theme changed ✨"
+    );
+
+}
+
+
+function loadTheme(){
+
+    const theme=
+        localStorage.getItem(
+            "mlb_theme"
+        )
+        ||
+        "classic";
+
+
+    setTheme(theme);
+
+}
+
+
+/* =========================================================
+   RENDER ALL
+========================================================= */
+
+function renderAll(){
+
+    renderHome();
+
+    renderDiary();
+
+    renderEvents();
+
+    renderTasks();
+
+    renderMemories();
+
+    renderCalendar();
+
+    renderCollage();
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadTheme();
+
+renderAll();
+
+</script>
+
+</body>
+</html>
